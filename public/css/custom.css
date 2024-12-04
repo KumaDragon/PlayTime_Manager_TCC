@@ -1,0 +1,222 @@
+/* menu do topo */
+.custom-navbar { 
+    background-color: whitesmoke !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Sombra leve */
+    margin-left: 70px;
+    margin-right: 70px;
+    font-family: "Montserrat", serif;
+    border-radius: 60px;
+    opacity: 0.9;
+
+}
+/* fundo sistema inteiro */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5dc; /* Cor de fundo */
+    background-image: url('/images/Prancheta 1.png'); /* Opcional: uma imagem */
+    background-repeat: no-repeat;
+    background-size: cover; /* Faz o background ocupar toda a tela */
+    background-position: center;
+    height: 100vh; /* Define a altura como 100% da tela */
+    width: 100vw; /* Define a largura como 100% da tela */
+}
+
+
+/* fundo tela login */
+
+
+/* Fundo tela cadastro*/
+
+/* fundo parte de cima card login */
+.card-header-login{
+    text-align: center;
+    font-size: 60px;
+    font-weight: bold;
+    color:#fff;
+    text-shadow: 1px 1px 4px black;
+    padding-top: 5%;
+    
+}
+
+/* fundo parte de cima card cadastro */
+.card-header-register{
+    text-align: center;
+    font-size: 60px;
+    font-weight: bold;
+    color:#fff;
+    text-shadow: 1px 1px 4px black;
+}
+
+/* formulario tela login */
+.custom-card-body-login{
+    background-color: #ffa3af;
+    color:#fff;
+    font-family: "Montserrat", serif;
+    font-weight: 300;
+    border-radius:50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 150px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Sombra leve */
+    text-shadow: 1px 1px 4px black;
+    margin-top: 1%;
+    padding: 20px;
+}
+
+.custom-card-body-register{
+    background-color: #ffa3af;
+    color:#fff;
+    font-family: "Montserrat", serif;
+    font-weight: 300;
+    border-radius:50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 80px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Sombra leve */
+    text-shadow: 1px 1px 4px black;
+    margin-top: 0.5%;
+    padding: 20px;
+}
+
+
+/* botoes menu */
+.custom-navbar .nav-link {
+    font-size: 18px;
+    color: #fbaf00 !important;
+}
+
+
+/* Espaco email e senha*/
+.form-control {
+    border:none;
+    border-radius: 50px; /* Bordas arredondadas */
+    padding: 10px; /* Espaçamento interno */
+    font-size: 1rem; /* Tamanho do texto */
+    transition: all 0.3s ease; /* Transição suave ao focar */
+    font-family: "Montserrat", serif;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra leve */
+   
+    max-width: 500px;
+}
+
+
+/* Link esqueceu sua senha*/
+.btn-link {
+    font-size: 0.9rem; /* Tamanho menor */
+    color: #007bff; /* Azul */
+    text-decoration: underline; /* Sublinhado */
+    text-decoration-thickness: 1px;
+    text-shadow: none;
+    font-family: "Montserrat", serif;
+}
+
+/* botoes entrar e cadastro */
+.btn-primary{
+    background-color: #fbaf00;
+    border: none;
+    border-radius: 50px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra leve */
+    text-shadow: 1px 1px 4px black;
+    text-align: left;
+}
+
+.btn-info{
+    background-color: #fbaf00;
+    border: none;
+    border-radius: 50px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra leve */
+    text-shadow: 1px 1px 3px black;
+    color: #f5f5dc;
+    font-family: "Montserrat", serif;
+    cursor: pointer;
+}
+
+
+  .card-register-client{
+    background-color: #03CEA4;
+    color: #fff;
+    font-family: "Montserrat", serif;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    padding: 20px;
+    text-shadow: 1px 1px 2px black;
+  }
+
+  .card-header{
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    color:#fff;
+    text-shadow: 1px 1px 2px black;
+  }
+
+ .card-body{
+    border:none;
+    border-radius: 50px; /* Bordas arredondadas */
+    padding: 10px; /* Espaçamento interno */
+    font-size: 1rem; /* Tamanho do texto */
+    transition: all 0.3s ease; /* Transição suave ao focar */
+    font-family: "Montserrat", serif;
+    align-items: center;
+    justify-content: center;
+
+ }
+
+  .btn-success{
+    background-color: #fbaf00;
+    border: none;
+    border-radius: 50px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra leve */
+    text-shadow: 1px 1px 3px black;
+    color: #f5f5dc;
+    font-family: "Montserrat", serif;
+    cursor: pointer;
+  }
+  /* card adicionar serviços */
+  .modal-body{
+    background-color: #03CEA4;
+    color: #fff;
+    font-family: "Montserrat", serif;
+  }
+  .modal-header{
+    color: #fff;
+    font-family: "Montserrat", serif;
+    font-size: 20px;
+  }
+  .modal-content{
+    background-color: #03CEA4;
+    border-radius: 50px;
+  }
+
+  .btn-close{
+    border: none;
+    border-radius: 50px;
+    text-shadow: 1px 1px 3px black;
+    color: #fff;
+    font-family: "Montserrat", serif;
+  }
+
+ .btn-danger{
+    background-color: #fbaf00;
+    border: none;
+    border-radius: 50px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra leve */
+    text-shadow: 1px 1px 3px black;
+    color: #f5f5dc;
+    font-family: "Montserrat", serif;
+    cursor: pointer;
+ }
+
+ .table-striped{
+    background-color: #007bff;
+ }
+
+ .card-body-service{
+    
+ }
+
+  
