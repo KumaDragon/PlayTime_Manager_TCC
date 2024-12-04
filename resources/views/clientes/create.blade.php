@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+
+
     <div class="container">
 
         <div class="row justify-content-center">
@@ -11,8 +13,18 @@
                     </div>
                     <a href="{{route('clientes.index')}}" class="btn btn-info">Voltar</a>
                     <div class="card-body">
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <form action="{{route('clientes.store')}}" method="post">
-                            
 
                             @csrf
                             <div class="form-group mt-3">

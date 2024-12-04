@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Consumo;
 use App\Models\Crianca;
 use App\Models\Cliente;
+use App\Models\Servico;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,9 +16,10 @@ class ConsumoController extends Controller
      */
     public function index()
     {
-        $consumos = Consumo::all();  // Pega todos os consumos do banco
-        $clientes = Cliente::all();   // Pega todos os clientes do banco
-        return view('home', compact('consumos', 'clientes'));  // Passa consumos e clientes para a view
+        // Pega todos os consumos com as relações de cliente, criança e serviços
+        $consumos = Consumo::with(['cliente', 'crianca', 'servicos'])->get();
+    
+        return view('consumo.index', compact('consumos'));  // Passa consumos para a view de relatórios
     }
 
     /**
