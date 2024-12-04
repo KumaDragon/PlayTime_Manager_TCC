@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <div class="container">
         <div class="modal" id="myModal">
             <div class="modal-dialog">
@@ -58,7 +59,6 @@
                                 <select name="crianca_id" id="" class="form-control">
                                     @forelse($cliente->criancas as $crianca)
                                         <option value="{{$crianca->id}}">{{$crianca->name}}</option>
-
                                     @empty
                                     @endforelse
                                 </select>
@@ -68,7 +68,6 @@
                                 <select name="servico_id" id="" class="form-control">
                                     @forelse($servicos as $servico)
                                         <option value="{{$servico->id}}">{{$servico->name}} -- R${{$servico->valor}}</option>
-
                                     @empty
                                     @endforelse
                                 </select>
@@ -82,51 +81,49 @@
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
                     </div>
 
                 </div>
             </div>
         </div>
 
-
-        
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span>Crianças cadastradas</span>
+                        <span>Crianças cadastradas de {{ $cliente->name }}</span>
 
-                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#myModal">+ Novo</button>
-                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#novaComanda">Abrir Comanda</button>
-                        <a href="{{route('clientes.create')}}" class="btn btn-info">Voltar</a>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">+ Novo</button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#novaComanda">Abrir comanda</button>
+                        <a href="{{route('clientes.create')}}" class="btn btn-primary">Voltar</a>
                     </div>
 
                     <div class="card-body">
                         <table class="table table-striped">
                             <thead>
-                            <tr>
-                                <th>Crianca</th>
-                                <th>Nascimento</th>
-                                <th>Idade</th>
-                                <th>Ação</th>
-                            </tr>
+                                <tr>
+                                    <th>Criança</th>
+                                    <th>Nascimento</th>
+                                    <th>Idade</th>
+                                    <th>Ação</th>
+                                </tr>
                             </thead>
                             <tbody>
-
-                            @forelse($cliente->criancas as $crianca)
-
-                                <tr>
-                                    <td>{{$crianca->name}}</td>
-                                    <td>{{$crianca->nascimento->format('d-m-Y')}}</td>
-                                    <td>{{$crianca->nascimento->diffInYears()}} anos</td>
-                                    <td>
-                                        <button>Editar</button></td>
-                                </tr>
-
-                            @empty
-                            @endforelse
-
+                                @forelse($cliente->criancas as $crianca)
+                                    <tr>
+                                        <td>{{ $crianca->name }}</td>
+                                        <td>{{ $crianca->nascimento->format('d-m-Y') }}</td>
+                                        <td>{{ $crianca->nascimento->diffInYears() }} anos</td>
+                                        <td>
+                                            <button>Editar</button>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4">Este cliente não tem crianças cadastradas.</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

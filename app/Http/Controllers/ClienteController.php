@@ -8,9 +8,17 @@ use Illuminate\Http\Request;
 
 class ClienteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function showCriancas()
+    {
+        // Obter todas as crianças e seus clientes associados
+        $criancas = \App\Models\Crianca::with('cliente')->get();
+    
+        // Retornar a view com as crianças e seus clientes
+        return view('clientes.show', compact('criancas'));
+    }
+    
+
+
     public function index()
     {
         $clientes = Cliente::all();
@@ -81,7 +89,7 @@ class ClienteController extends Controller
     public function crianca(Cliente $cliente)
     {
         $servicos = Servico::all();
-        return view('clientes.criancas', compact('cliente','servicos'));
+        return view('clientes.show', compact('cliente','servicos'));
     }
 
     public function getCriancas(Cliente $cliente)
