@@ -81,9 +81,9 @@
 
     <!-- Tabela de Consumos -->
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card mb-3">
-                <div class="card-body d-flex justify-content-between">
+                <div class="card-body d-flex justify-content-start gap-2">
                     <a href="{{ route('servicos.index') }}" class="btn btn-primary">Serviços</a>
                     <a href="{{ route('clientes.index') }}" class="btn btn-primary">Clientes</a>
                     <a href="{{ route('consumo.index') }}" class="btn btn-primary">Relatórios</a>
@@ -102,7 +102,7 @@
                                 <th>Contador</th>
                                 <th>Total</th>
                                 <th>Ações</th>
-                                <th>Finalizar</th>
+                                <th>Comanda</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -128,23 +128,43 @@
                     </select>
                 </div>
 
-                <div class="form-group mt-3">
-                    <button type="submit" class="btn btn-success">Adicionar</button>
-                </div>
-            </form>
+                <div class="form-group mt-3 d-flex gap-2">
+    <form action="{{ route('consumo.store') }}" method="POST" class="d-inline">
+        @csrf
+        <button type="submit" class="btn btn-success">Adicionar Serviço</button>
 
-            <form action="{{ route('consumo.destroy', $consumo->id) }}" method="POST" class="d-inline">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta comanda?')">Excluir</button>
-            </form>
+
+    </form>
+
+
+</div>
+
+
+
+
         </td>
         <td>
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#servicosModal{{ $consumo->id }}">
+            Serviços
+        </button>
             <form action="{{ route('consumo.destroy', $consumo->id) }}" method="POST" class="d-inline">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-success" onclick="return confirm('Tem certeza que deseja finalizar esta comanda?')">Finalizar comanda</button>
+                <button type="submit" class="btn btn-success" onclick="return confirm('Tem certeza que deseja finalizar esta comanda?')">Finalizar</button>
             </form>
+            <div class="form-group mt-3">
+    <a href="{{ route('recibo.pdf', ['id' => $consumo->id]) }}" class="btn btn-primary" target="_blank">Resumo</a>
+    
+    <form action="{{ route('consumo.destroy', $consumo->id) }}" method="POST" class="d-inline">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta comanda?')">Excluir</button>
+    </form>
+
+</div>
+
+
         </td>
     </tr>
 @empty
@@ -152,6 +172,40 @@
         <td colspan="6" class="text-center">Nenhuma comanda encontrada.</td>
     </tr>
 @endforelse
+@if(session('success'))
+    <div id="successMessage" class="alert alert-success position-fixed top-0 end-0 m-3" style="z-index: 1050;">
+        {{ session('success') }}
+    </div>
+@endif
+@foreach($consumos as $consumo)
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="servicosModal{{ $consumo->id }}" tabindex="-1" aria-labelledby="servicosModalLabel{{ $consumo->id }}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="servicosModalLabel{{ $consumo->id }}">Serviços do Consumo #{{ $consumo->id }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul>
+                            @foreach($consumo->servicos as $servico)
+                                <li><strong>{{ $servico->name }}</strong> - R$ {{ number_format($servico->valor, 2, ',', '.') }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endforeach
+
+
+
                         </tbody>
                     </table>
                 </div>
@@ -162,19 +216,31 @@
 @endsection
 
 @section('js')
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Inicializar contadores
-        @foreach($consumos as $consumo)
-            updateCountdown(
-                new Date("{{ $consumo->created_at->addMinutes($consumo->totalTempo())->toDateTimeString() }}"),
-                "countdown_{{ $consumo->id }}",
-                "{{ optional($consumo->cliente)->name }}",
-                "{{ optional($consumo->crianca)->name }}"
-            );
-        @endforeach
-    });
+document.addEventListener("DOMContentLoaded", function () {
+    // Inicializar contadores
+    @foreach($consumos as $consumo)
+        updateCountdown(
+            new Date("{{ $consumo->created_at->addMinutes($consumo->totalTempo())->toDateTimeString() }}"),
+            "countdown_{{ $consumo->id }}",
+            "{{ optional($consumo->cliente)->name }}",
+            "{{ optional($consumo->crianca)->name }}"
+        );
+    @endforeach
+
+    // Ocultar mensagem de sucesso após 5 segundos
+    const successMessage = document.getElementById('successMessage');
+    if (successMessage) {
+        setTimeout(() => {
+            successMessage.style.display = 'none'; // Esconde a mensagem
+        }, 5000);
+    }
+});
+
+
 
     function updateCountdown(endTime, elementId, clienteName, criancaName) {
         const interval = setInterval(() => {

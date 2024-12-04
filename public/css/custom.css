@@ -22,6 +22,24 @@ body {
     width: 100vw; /* Define a largura como 100% da tela */
 }
 
+#notification {
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    font-weight: bold;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(50%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
 /* fundo tela login */
 
@@ -211,12 +229,102 @@ body {
     cursor: pointer;
  }
 
- .table-striped{
-    background-color: #007bff;
- }
+ .table-striped {
+  width: 100%; /* Faz a tabela ocupar toda a largura disponível */
+  max-width: 1200px; /* Limita o tamanho máximo da tabela em telas grandes */
+  margin: 0 auto; /* Centraliza a tabela */
+  border-collapse: collapse; /* Remove espaçamento entre as bordas */
+}
+
+/* Arquivo style.css */
+.form-control {
+  width: 280px; /* Define a largura */
+  font-size: 1rem; /* Aumenta o tamanho da fonte */
+  height: 40px; /* Define a altura do select */
+}
+
+/* Para telas menores */
+@media (max-width: 768px) {
+  .form-control {
+      width: 100%; /* Faz o select ocupar toda a largura disponível */
+      font-size: 0.9rem; /* Ajusta o tamanho da fonte */
+  }
+}
+
 
  .card-body-service{
     
  }
+
+ /* Ajustes responsivos */
+@media (max-width: 1200px) {
+  .custom-navbar {
+      margin-left: 50px;
+      margin-right: 50px;
+  }
+
+  .custom-card-body-login, .custom-card-body-register {
+      margin: 100px 20px;
+  }
+
+  .card-header-login, .card-header-register {
+      font-size: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-navbar {
+      margin-left: 20px;
+      margin-right: 20px;
+      font-size: 14px;
+  }
+
+  .custom-card-body-login, .custom-card-body-register {
+      margin: 50px 10px;
+      padding: 15px;
+      flex-direction: column;
+  }
+
+  .card-header-login, .card-header-register {
+      font-size: 40px;
+  }
+
+  .form-control {
+      max-width: 100%;
+      font-size: 0.9rem;
+  }
+
+  #notification {
+      font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .custom-navbar {
+      margin-left: 10px;
+      margin-right: 10px;
+      padding: 5px;
+  }
+
+  .custom-card-body-login, .custom-card-body-register {
+      margin: 20px 5px;
+      padding: 10px;
+  }
+
+  .card-header-login, .card-header-register {
+      font-size: 30px;
+  }
+
+  .btn-primary, .btn-info, .btn-success, .btn-danger {
+      font-size: 0.8rem;
+      padding: 5px 10px;
+  }
+
+  #notification {
+      width: 95%;
+      max-width: 300px;
+  }
+}
+
 
   

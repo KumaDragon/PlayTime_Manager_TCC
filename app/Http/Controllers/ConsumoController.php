@@ -15,10 +15,11 @@ class ConsumoController extends Controller
      */
     public function index()
     {
-        $consumos = Consumo::all();  // Pega todos os consumos do banco
-        $clientes = Cliente::all();   // Pega todos os clientes do banco
+        $consumos = Consumo::with('servicos')->get();  // Carrega os consumos com seus serviços
+        $clientes = Cliente::all();  // Pega todos os clientes do banco
         return view('home', compact('consumos', 'clientes'));  // Passa consumos e clientes para a view
     }
+    
 
     /**
      * Show the form for creating a new resource.
