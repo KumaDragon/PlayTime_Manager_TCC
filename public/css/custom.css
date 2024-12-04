@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 /* menu do topo */
 .custom-navbar { 
     background-color: whitesmoke !important;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Sombra leve */
     margin-left: 70px;
     margin-right: 70px;
-    font-family: "Montserrat", serif;
+    font-family: "Poppins", sans-serif;
     border-radius: 60px;
     opacity: 0.9;
 
@@ -70,15 +72,15 @@ body {
 .custom-card-body-login{
     background-color: #ffa3af;
     color:#fff;
-    font-family: "Montserrat", serif;
+    font-family: "Poppins", sans-serif;
     font-weight: 300;
-    border-radius:50px;
+    border-radius:20px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 150px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Sombra leve */
-    text-shadow: 1px 1px 4px black;
+    text-shadow: 1px 1px 4px black;     
     margin-top: 1%;
     padding: 20px;
 }
@@ -86,15 +88,15 @@ body {
 .custom-card-body-register{
     background-color: #ffa3af;
     color:#fff;
-    font-family: "Montserrat", serif;
+    font-family: "Poppins", sans-serif;
     font-weight: 300;
-    border-radius:50px;
+    border-radius:20px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 80px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Sombra leve */
-    text-shadow: 1px 1px 4px black;
+    text-shadow: 1px 1px 4px black;  
     margin-top: 0.5%;
     padding: 20px;
 }
@@ -110,13 +112,12 @@ body {
 /* Espaco email e senha*/
 .form-control {
     border:none;
-    border-radius: 50px; /* Bordas arredondadas */
+    border-radius: 20px; /* Bordas arredondadas */
     padding: 10px; /* Espaçamento interno */
     font-size: 1rem; /* Tamanho do texto */
     transition: all 0.3s ease; /* Transição suave ao focar */
-    font-family: "Montserrat", serif;
+    font-family: "Poppins", sans-serif;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra leve */
-   
     max-width: 500px;
 }
 
@@ -128,7 +129,11 @@ body {
     text-decoration: underline; /* Sublinhado */
     text-decoration-thickness: 1px;
     text-shadow: none;
-    font-family: "Montserrat", serif;
+    font-family: "Poppins", sans-serif;
+    padding-top: 5px;  /* Ajuste o espaço acima */
+    padding-bottom: 5px;  /* Ajuste o espaço abaixo */
+    text-align: center;
+
 }
 
 /* botoes entrar e cadastro */
@@ -137,8 +142,8 @@ body {
     border: none;
     border-radius: 50px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra leve */
-    text-shadow: 1px 1px 4px black;
-    text-align: left;
+    text-shadow: 1px 1px 1px black;
+    text-align: center;
 }
 
 .btn-info{
@@ -146,20 +151,24 @@ body {
     border: none;
     border-radius: 50px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra leve */
-    text-shadow: 1px 1px 3px black;
+    text-shadow: 1px 1px 1px black;
     color: #f5f5dc;
-    font-family: "Montserrat", serif;
+    font-family: "Poppins", sans-serif;
     cursor: pointer;
+    padding-top: 5px;  /* Ajuste o espaço acima */
+    padding-bottom: 5px;  /* Ajuste o espaço abaixo */
+    text-align: center;
+
 }
 
 
   .card-register-client{
     background-color: #03CEA4;
     color: #fff;
-    font-family: "Montserrat", serif;
+    font-family: "Poppins", sans-serif;
     align-items: center;
     justify-content: center;
-    border-radius: 50px;
+    border-radius: 20px;
     padding: 20px;
     text-shadow: 1px 1px 2px black;
   }
@@ -174,11 +183,11 @@ body {
 
  .card-body{
     border:none;
-    border-radius: 50px; /* Bordas arredondadas */
+    border-radius: 20px; /* Bordas arredondadas */
     padding: 10px; /* Espaçamento interno */
     font-size: 1rem; /* Tamanho do texto */
     transition: all 0.3s ease; /* Transição suave ao focar */
-    font-family: "Montserrat", serif;
+  font-family: "Poppins", sans-serif;
     align-items: center;
     justify-content: center;
 
@@ -189,33 +198,41 @@ body {
     border: none;
     border-radius: 50px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra leve */
-    text-shadow: 1px 1px 3px black;
+    text-shadow: 1px 1px 1px black;
     color: #f5f5dc;
-    font-family: "Montserrat", serif;
+    font-family: "Poppins", sans-serif;
     cursor: pointer;
+    padding-top: 5px;  /* Ajuste o espaço acima */
+    padding-bottom: 5px;  /* Ajuste o espaço abaixo */
+    text-align: center;
+
   }
   /* card adicionar serviços */
   .modal-body{
     background-color: #03CEA4;
     color: #fff;
-    font-family: "Montserrat", serif;
+  font-family: "Poppins", sans-serif;
   }
   .modal-header{
     color: #fff;
-    font-family: "Montserrat", serif;
+  font-family: "Poppins", sans-serif;
     font-size: 20px;
   }
   .modal-content{
     background-color: #03CEA4;
-    border-radius: 50px;
+    border-radius: 20px;
   }
 
   .btn-close{
     border: none;
     border-radius: 50px;
-    text-shadow: 1px 1px 3px black;
+    text-shadow: 1px 1px 1px black;
     color: #fff;
-    font-family: "Montserrat", serif;
+    font-family: "Poppins", sans-serif;
+    padding-top: 5px;  /* Ajuste o espaço acima */
+    padding-bottom: 5px;  /* Ajuste o espaço abaixo */
+    text-align: center;
+
   }
 
  .btn-danger{
@@ -223,10 +240,14 @@ body {
     border: none;
     border-radius: 50px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra leve */
-    text-shadow: 1px 1px 3px black;
+    text-shadow: 1px 1px 1px black;
     color: #f5f5dc;
-    font-family: "Montserrat", serif;
+    font-family: "Poppins", sans-serif;
     cursor: pointer;
+    padding-top: 5px;  /* Ajuste o espaço acima */
+    padding-bottom: 5px;  /* Ajuste o espaço abaixo */
+    text-align: center;
+
  }
 
  .table-striped {
@@ -318,6 +339,10 @@ body {
   .btn-primary, .btn-info, .btn-success, .btn-danger {
       font-size: 0.8rem;
       padding: 5px 10px;
+      padding-top: 5px;  /* Ajuste o espaço acima */
+      padding-bottom: 5px;  /* Ajuste o espaço abaixo */
+      text-align: center;
+
   }
 
   #notification {

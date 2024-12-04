@@ -7,17 +7,20 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Cliente já tem Cadastro?</h4>
+                    <h4 class="modal-title" id="myModalLabel">Cliente possui cadastro?</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <button type="button" class="btn btn-success w-50" data-bs-toggle="modal" data-bs-target="#abrirComanda">SIM</button>
-                        <a href="{{ route('clientes.create') }}" class="btn btn-danger w-50">NÃO</a>
-                    </div>
+                <div class="row justify-content-center">
+    <div class="col-auto">
+        <button type="button" class="btn btn-success w-15" data-bs-toggle="modal" data-bs-target="#abrirComanda">SIM</button>
+    </div>
+    <div class="col-auto">
+        <a href="{{ route('clientes.create') }}" class="btn btn-danger w-15">NÃO</a>
+    </div>
+</div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                 </div>
             </div>
         </div>
@@ -98,7 +101,7 @@
                             <tr>
                                 <th>Cliente</th>
                                 <th>Criança</th>
-                                <th>Hora final</th>
+                                <th>Hora Final</th>
                                 <th>Contador</th>
                                 <th>Total</th>
                                 <th>Ações</th>
