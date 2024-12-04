@@ -14,18 +14,19 @@ class ConsumoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-<<<<<<< HEAD
+        // Validação dos dados recebidos via requisição
+        $request->validate([
+        'cliente_id' => 'required|exists:clientes,id',
+        'crianca_id' => 'required|exists:criancas,id',
+        'servico_id' => 'required|array|min:1',
+        'servico_id.*' => 'exists:servicos,id',
+        ]);
+
         $consumos = Consumo::with('servicos')->get();  // Carrega os consumos com seus serviços
         $clientes = Cliente::all();  // Pega todos os clientes do banco
         return view('home', compact('consumos', 'clientes'));  // Passa consumos e clientes para a view
-=======
-        // Pega todos os consumos com as relações de cliente, criança e serviços
-        $consumos = Consumo::with(['cliente', 'crianca', 'servicos'])->get();
-    
-        return view('consumo.index', compact('consumos'));  // Passa consumos para a view de relatórios
->>>>>>> 4f3cb89935381b853196f7941e9e751aebc8d5ae
     }
     
 
@@ -57,6 +58,7 @@ class ConsumoController extends Controller
         $consumo->user_id = Auth::id();
         $consumo->crianca_id = $criancaId;
         $consumo->cliente_id = $clienteId;
+        $consumo->status = 'pendente'; // Define o status inicial
         $consumo->save();
 
         $consumo->servicos()->attach($request->servico_id);
@@ -67,6 +69,23 @@ class ConsumoController extends Controller
 
         return redirect(url('home'));
     }
+
+    public function finalizar($id)
+    {
+        $consumo = Consumo::find($id);
+    
+        if ($consumo) {
+            $consumo->status = 'finalizado';  // Atualiza o status
+            $consumo->save();
+    
+            return redirect()->route('consumo.index')->with('success', 'Comanda finalizada com sucesso!');
+            dd('Redirecionando para relatórios...');
+        }
+    
+        return redirect()->route('home')->with('error', 'Comanda não encontrada.');
+    }
+    
+    
 
     public function show(Consumo $consumo)
     {
@@ -89,15 +108,16 @@ class ConsumoController extends Controller
      */
     public function update(Request $request, Consumo $consumo)
     {
-    $validated = $request->validate([
-        'name' => 'required|string|max:255',
-        'tempo' => 'required|numeric|min:1',
-        'valor' => 'required|numeric|min:0',
-    ]);
+
     } 
 
     public function destroy(Consumo $consumo)
     {
+
+        if (!$consumo) {
+            return redirect()->route('consumo.index')->withErrors('Consumo não encontrado.');
+        }
+
         $consumo->servicos()->detach();
         // Excluir o serviço se não estiver sendo utilizado
         $consumo->delete();
@@ -121,8 +141,6 @@ class ConsumoController extends Controller
     
         // Adiciona o serviço à comanda
         $consumo->servicos()->attach($servicoId);
-    
-        // Atualiza o tempo e o valor do consumo
         $consumo->tempo_total += $servico->tempo;
         $consumo->valor_total += $servico->valor;
         $consumo->save();

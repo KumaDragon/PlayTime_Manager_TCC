@@ -77,11 +77,6 @@
         </div>
     </div>
 
-    <!-- Mensagem de serviço finalizado -->
-    <div id="serviceFinishedMessage" class="alert alert-success position-fixed top-50 start-50 translate-middle" style="display:none; z-index:9999;">
-        Serviço finalizado!
-    </div>
-
     <!-- Tabela de Consumos -->
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -151,11 +146,11 @@
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#servicosModal{{ $consumo->id }}">
             Serviços
         </button>
-            <form action="{{ route('consumo.destroy', $consumo->id) }}" method="POST" class="d-inline">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-success" onclick="return confirm('Tem certeza que deseja finalizar esta comanda?')">Finalizar</button>
-            </form>
+        <form action="{{ route('consumo.finalizar', $consumo->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+            <button class="btn btn-success">Finalizar</button>
+        </form>
             <div class="form-group mt-3">
     <a href="{{ route('recibo.pdf', ['id' => $consumo->id]) }}" class="btn btn-primary" target="_blank">Resumo</a>
     

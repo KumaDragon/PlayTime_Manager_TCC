@@ -7,8 +7,8 @@
                 <div class="card-services">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <span>Serviços</span>
-                        <a href="{{route('servicos.create')}}" class="btn btn-info">+Novo</a>
-                        <a href="{{route('home')}}" class="btn btn-info">Voltar</a>
+                        <a href="{{route('servicos.create')}}" class="btn btn-primary">+Novo</a>
+                        <a href="{{route('home')}}" class="btn btn-primary">Voltar</a>
                     </div>
 
                     <div class="card-body-service">
@@ -30,7 +30,7 @@
                                     <td>{{$servico->valor}}</td>
                                     <td>{{$servico->tempo}}</td>
                                     <td>
-                                    <a href="{{route('servicos.edit', $servico)}}" type="button" class="btn btn-info">Editar</a>
+                                    <a href="{{route('servicos.edit', $servico)}}" type="button" class="btn btn-primary">Editar</a>
                                         <form action="{{ route('servicos.destroy', $servico->id) }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
