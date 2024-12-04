@@ -8,7 +8,6 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <span>Cliente</span>
                         <a href="{{route('clientes.create')}}" class="btn btn-primary">+Novo</a>
-                        <a href="{{route('clientes.criancas')}}" class="btn btn-primary">Crianças cadastradas</a>
                         <a href="{{route('home')}}" class="btn btn-primary">Voltar</a>
                     </div>
 
