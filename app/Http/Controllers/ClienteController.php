@@ -83,4 +83,14 @@ class ClienteController extends Controller
         $servicos = Servico::all();
         return view('clientes.criancas', compact('cliente','servicos'));
     }
+
+    public function getCriancas(Cliente $cliente)
+    {
+    // Carregar as crianças associadas ao cliente
+    $criancas = $cliente->criancas;
+
+    // Retornar os dados como JSON
+    return response()->json($criancas);
+    }
+
 }

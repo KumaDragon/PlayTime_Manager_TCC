@@ -28,13 +28,9 @@ class Consumo extends Model
 
     public function totalTempo()
     {
-        $tempos = $this->servicos;
-        $result = 0;
-        foreach ($tempos as $tempo) {
-            $result += $tempo->tempo;
-        }
-        return $result;
+    return $this->servicos->sum('tempo');
     }
+
 
 
 
@@ -46,21 +42,16 @@ class Consumo extends Model
 
     public function crianca()
     {
-        return $this->belongsTo(Crianca::class);
+    return $this->belongsTo(Crianca::class, 'crianca_id');
     }
+
 
     public function tempo()
     {
-        $tempoTotal = $this->totalTempo();  // Obter o tempo total dos serviços
-    
-        // Garantir que 'created_at' seja uma instância de Carbon e não seja nulo
-        if ($this->created_at) {
-            $criado = $this->created_at->copy(); // Cria um clone do valor original
-        } else {
-            $criado = Carbon::now(); // Inicializa com o horário atual
-        }
-    
-        // Adicione os minutos ao valor de 'created_at'
-        return $criado->addMinutes($tempoTotal);
+        $tempoTotal = $this->totalTempo(); // Obter o tempo total dos serviços
+        $criado = $this->created_at ? Carbon::parse($this->created_at) : Carbon::now(); // Usa 'created_at' ou o horário atual
+        return $criado->addMinutes($tempoTotal); // Soma o tempo total ao created_at (ou horário atual)
     }
+    
+
 }

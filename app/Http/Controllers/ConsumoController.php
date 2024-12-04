@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Consumo;
+use App\Models\Crianca;
+use App\Models\Cliente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,15 +16,17 @@ class ConsumoController extends Controller
     public function index()
     {
         $consumos = Consumo::all();  // Pega todos os consumos do banco
-        return view('consumo.index', compact('consumos'));  // Passa os consumos para a view
+        $clientes = Cliente::all();   // Pega todos os clientes do banco
+        return view('home', compact('consumos', 'clientes'));  // Passa consumos e clientes para a view
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($cliente_id)
     {
-        //
+        $cliente = Cliente::with('criancas')->find($cliente_id);  // Obtém o cliente com suas crianças
+        return view('consumo.create', compact('cliente'));
     }
 
     /**
@@ -30,11 +34,20 @@ class ConsumoController extends Controller
      */
     public function store(Request $request)
     {
+        $clienteId = $request->input('cliente_id');
+        $criancaId = $request->input('crianca_id');
+
+        // Verificar se a criança pertence ao cliente selecionado
+        $crianca = Crianca::where('id', $criancaId)->where('cliente_id', $clienteId)->first();
+
+        if (!$crianca) {
+            return redirect()->back()->withErrors('A criança selecionada não pertence ao cliente escolhido.');
+        }
 
         $consumo = new Consumo();
         $consumo->user_id = Auth::id();
-        $consumo->crianca_id = $request->input('crianca_id');
-        $consumo->cliente_id = $request->input('cliente_id');
+        $consumo->crianca_id = $criancaId;
+        $consumo->cliente_id = $clienteId;
         $consumo->save();
 
         $consumo->servicos()->attach($request->servico_id);
@@ -49,7 +62,7 @@ class ConsumoController extends Controller
     public function show(Consumo $consumo)
     {
         // Passar os dados para a view
-        return view('consumos.show', [
+        return view('home', [
             'consumo' => $consumo,
             'servicos' => $consumo->servicos,
             'valor_total' => $consumo->servicos->sum('valor'),
@@ -86,24 +99,27 @@ class ConsumoController extends Controller
     }
 
 
-    public function servico(Request $request, Consumo $consumo, $servico)
+    public function servico(Request $request, Consumo $consumo)
     {
-        // Validação do serviço para garantir que ele seja válido
-        if (!$servico || !is_numeric($servico) || !\App\Models\Servico::where('id', $servico)->exists()) {
-            return redirect(url('home'))->withErrors('Serviço inválido.');
+        // Recupera o serviço selecionado
+        $servicoId = $request->input('servico_id');
+        $servico = \App\Models\Servico::find($servicoId);
+    
+        // Verifica se o serviço é válido
+        if (!$servico) {
+            return redirect()->route('home')->withErrors('Serviço inválido.');
         }
     
-        // Adicionar o serviço à comanda
-        $consumo->servicos()->attach($servico);
+        // Adiciona o serviço à comanda
+        $consumo->servicos()->attach($servicoId);
     
-        // Recalcular e salvar os totais
-        $consumo->valor_total = $consumo->servicos->sum('valor');
-        $consumo->tempo_total = $consumo->totalTempo();
+        // Atualiza o tempo e o valor do consumo
+        $consumo->tempo_total += $servico->tempo;
+        $consumo->valor_total += $servico->valor;
         $consumo->save();
     
-        return redirect(url('home'))->with('success', 'Serviço adicionado com sucesso!');
+        // Retorna à página inicial com sucesso
+        return redirect()->route('home')->with('consumo', $consumo)->with('success', 'Serviço adicionado com sucesso!');
     }
     
-    
-
 }

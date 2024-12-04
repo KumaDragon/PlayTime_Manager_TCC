@@ -16,4 +16,10 @@ class Crianca extends Model
     protected $casts = [
         'nascimento' => 'datetime',
     ];
+
+    public function cliente()
+    {
+    return $this->belongsTo(Cliente::class);
+    }
+
 }
