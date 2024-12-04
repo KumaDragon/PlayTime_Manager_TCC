@@ -21,6 +21,13 @@ class ServicoController extends Controller
 
     public function store(Request $request)
     {
+
+        $validated = $request->validate([
+            'name' => 'required|string|min:3|max:255',
+            'tempo' => 'required|numeric|min:1',
+            'valor' => 'required|numeric|min:0',
+        ]);
+        
         $servico = new Servico();
         $servico->name = $request->input('name');
         $servico->tempo = $request->input('tempo');

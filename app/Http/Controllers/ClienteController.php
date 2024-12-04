@@ -36,6 +36,13 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
+
+            // Validação dos campos
+        $request->validate([
+        'name' => 'required|string|max:255',        // Nome é obrigatório, string e até 255 caracteres
+        'telefone' => 'required|numeric|min:11',    // Telefone é obrigatório, numérico e com pelo menos 11 caracteres
+        ]);
+        
         $cliente = new Cliente();
         $cliente->name = $request->input('name');
         $cliente->telefone = $request->input('telefone');

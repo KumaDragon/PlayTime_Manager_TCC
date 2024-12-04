@@ -28,6 +28,13 @@ class CriancaController extends Controller
      */
     public function store(Request $request)
     {
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'nascimento' => 'required|date|before_or_equal:today', // Validação para data válida e não no futuro
+            'cliente_id' => 'required|exists:clientes,id',
+        ]);
+        
         $crianca = new Crianca();
         $crianca->name = $request->input('name');
         $crianca->cliente_id= $request->input('cliente_id');
