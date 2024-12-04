@@ -1,29 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-/* menu do topo */
+/* Menu do topo */
 .custom-navbar { 
     background-color: whitesmoke !important;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Sombra leve */
-    margin-left: 70px;
-    margin-right: 70px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    margin: 0 70px;
     font-family: "Poppins", sans-serif;
     border-radius: 60px;
     opacity: 0.9;
-
 }
-/* fundo sistema inteiro */
+
+/* Fundo sistema inteiro */
 body {
     margin: 0;
     padding: 0;
-    background-color: #f5f5dc; /* Cor de fundo */
-    background-image: url('/images/Prancheta 1.png'); /* Opcional: uma imagem */
+    background-color: #f5f5dc;
+    background-image: url('/images/Prancheta 1.png');
     background-repeat: no-repeat;
-    background-size: cover; /* Faz o background ocupar toda a tela */
+    background-size: cover;
     background-position: center;
-    height: 100vh; /* Define a altura como 100% da tela */
-    width: 100vw; /* Define a largura como 100% da tela */
+    height: 100vh;
+    width: 100vw;
 }
 
+/* Notificação */
 #notification {
     width: 90%;
     max-width: 400px;
@@ -32,6 +32,7 @@ body {
     animation: fadeIn 0.5s ease;
 }
 
+/* Animação de fade */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -43,313 +44,146 @@ body {
     }
 }
 
-/* fundo tela login */
-
-
-/* Fundo tela cadastro*/
-
-/* fundo parte de cima card login */
-.card-header-login{
+/* Cabeçalhos de card */
+.card-header-login, .card-header-register {
     text-align: center;
     font-size: 60px;
     font-weight: bold;
-    color:#fff;
+    color: #fff;
     text-shadow: 1px 1px 4px black;
+}
+
+.card-header-login {
     padding-top: 5%;
-    
 }
 
-/* fundo parte de cima card cadastro */
-.card-header-register{
-    text-align: center;
-    font-size: 60px;
-    font-weight: bold;
-    color:#fff;
-    text-shadow: 1px 1px 4px black;
-}
-
-/* formulario tela login */
-.custom-card-body-login{
+/* Corpo do card */
+.custom-card-body-login, .custom-card-body-register {
     background-color: #ffa3af;
-    color:#fff;
+    color: #fff;
     font-family: "Poppins", sans-serif;
     font-weight: 300;
-    border-radius:20px;
+    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 150px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Sombra leve */
-    text-shadow: 1px 1px 4px black;     
-    margin-top: 1%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    text-shadow: 1px 1px 4px black;
     padding: 20px;
 }
 
-.custom-card-body-register{
-    background-color: #ffa3af;
-    color:#fff;
-    font-family: "Poppins", sans-serif;
-    font-weight: 300;
-    border-radius:20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.custom-card-body-register {
     margin: 80px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Sombra leve */
-    text-shadow: 1px 1px 4px black;  
     margin-top: 0.5%;
-    padding: 20px;
 }
 
-
-/* botoes menu */
-.custom-navbar .nav-link {
-    font-size: 18px;
-    color: #fbaf00 !important;
+.custom-card-body-login {
+    margin-top: 1%;
 }
 
-
-/* Espaco email e senha*/
-.form-control {
-    border:none;
-    border-radius: 20px; /* Bordas arredondadas */
-    padding: 10px; /* Espaçamento interno */
-    font-size: 1rem; /* Tamanho do texto */
-    transition: all 0.3s ease; /* Transição suave ao focar */
+/* Botões */
+.btn-primary, .btn-info, .btn-success, .btn-danger, .btn-close {
+    background-color: #fbaf00;
+    border: none;
+    border-radius: 50px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    text-shadow: 1px 1px 1px black;
+    color: #f5f5dc;
     font-family: "Poppins", sans-serif;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra leve */
-    max-width: 500px;
+    cursor: pointer;
+    padding: 5px 10px;
+    text-align: center;
 }
 
-
-/* Link esqueceu sua senha*/
 .btn-link {
-    font-size: 0.9rem; /* Tamanho menor */
-    color: #007bff; /* Azul */
-    text-decoration: underline; /* Sublinhado */
-    text-decoration-thickness: 1px;
-    text-shadow: none;
+    font-size: 0.9rem;
+    color: #007bff;
+    text-decoration: underline;
     font-family: "Poppins", sans-serif;
-    padding-top: 5px;  /* Ajuste o espaço acima */
-    padding-bottom: 5px;  /* Ajuste o espaço abaixo */
-    text-align: center;
-
-}
-
-/* botoes entrar e cadastro */
-.btn-primary{
-    background-color: #fbaf00;
-    border: none;
-    border-radius: 50px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra leve */
-    text-shadow: 1px 1px 1px black;
+    padding: 5px 0;
     text-align: center;
 }
 
-.btn-info{
-    background-color: #fbaf00;
-    border: none;
-    border-radius: 50px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra leve */
-    text-shadow: 1px 1px 1px black;
-    color: #f5f5dc;
-    font-family: "Poppins", sans-serif;
-    cursor: pointer;
-    padding-top: 5px;  /* Ajuste o espaço acima */
-    padding-bottom: 5px;  /* Ajuste o espaço abaixo */
-    text-align: center;
-
-}
-
-
-  .card-register-client{
-    background-color: #03CEA4;
-    color: #fff;
-    font-family: "Poppins", sans-serif;
-    align-items: center;
-    justify-content: center;
-    border-radius: 20px;
-    padding: 20px;
-    text-shadow: 1px 1px 2px black;
-  }
-
-  .card-header{
-    text-align: center;
-    font-size: 40px;
-    font-weight: bold;
-    color:#fff;
-    text-shadow: 1px 1px 2px black;
-  }
-
- .card-body{
-    border:none;
-    border-radius: 20px; /* Bordas arredondadas */
-    padding: 10px; /* Espaçamento interno */
-    font-size: 1rem; /* Tamanho do texto */
-    transition: all 0.3s ease; /* Transição suave ao focar */
-  font-family: "Poppins", sans-serif;
-    align-items: center;
-    justify-content: center;
-
- }
-
-  .btn-success{
-    background-color: #fbaf00;
-    border: none;
-    border-radius: 50px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra leve */
-    text-shadow: 1px 1px 1px black;
-    color: #f5f5dc;
-    font-family: "Poppins", sans-serif;
-    cursor: pointer;
-    padding-top: 5px;  /* Ajuste o espaço acima */
-    padding-bottom: 5px;  /* Ajuste o espaço abaixo */
-    text-align: center;
-
-  }
-  /* card adicionar serviços */
-  .modal-body{
-    background-color: #03CEA4;
-    color: #fff;
-  font-family: "Poppins", sans-serif;
-  }
-  .modal-header{
-    color: #fff;
-  font-family: "Poppins", sans-serif;
-    font-size: 20px;
-  }
-  .modal-content{
-    background-color: #03CEA4;
-    border-radius: 20px;
-  }
-
-  .btn-close{
-    border: none;
-    border-radius: 50px;
-    text-shadow: 1px 1px 1px black;
-    color: #fff;
-    font-family: "Poppins", sans-serif;
-    padding-top: 5px;  /* Ajuste o espaço acima */
-    padding-bottom: 5px;  /* Ajuste o espaço abaixo */
-    text-align: center;
-
-  }
-
- .btn-danger{
-    background-color: #fbaf00;
-    border: none;
-    border-radius: 50px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra leve */
-    text-shadow: 1px 1px 1px black;
-    color: #f5f5dc;
-    font-family: "Poppins", sans-serif;
-    cursor: pointer;
-    padding-top: 5px;  /* Ajuste o espaço acima */
-    padding-bottom: 5px;  /* Ajuste o espaço abaixo */
-    text-align: center;
-
- }
-
- .table-striped {
-  width: 100%; /* Faz a tabela ocupar toda a largura disponível */
-  max-width: 1200px; /* Limita o tamanho máximo da tabela em telas grandes */
-  margin: 0 auto; /* Centraliza a tabela */
-  border-collapse: collapse; /* Remove espaçamento entre as bordas */
-}
-
-/* Arquivo style.css */
+/* Campos de formulário */
 .form-control {
-  width: 280px; /* Define a largura */
-  font-size: 1rem; /* Aumenta o tamanho da fonte */
-  height: 40px; /* Define a altura do select */
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+    font-size: 1rem;
+    font-family: "Poppins", sans-serif;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    transition: all 0.3s ease;
 }
 
-/* Para telas menores */
-@media (max-width: 768px) {
-  .form-control {
-      width: 100%; /* Faz o select ocupar toda a largura disponível */
-      font-size: 0.9rem; /* Ajusta o tamanho da fonte */
-  }
+.form-control {
+    width: 280px;
+    height: 40px;
 }
 
-
- .card-body-service{
-    
- }
-
- /* Ajustes responsivos */
+/* Responsividade */
 @media (max-width: 1200px) {
-  .custom-navbar {
-      margin-left: 50px;
-      margin-right: 50px;
-  }
+    .custom-navbar {
+        margin: 0 50px;
+    }
 
-  .custom-card-body-login, .custom-card-body-register {
-      margin: 100px 20px;
-  }
+    .custom-card-body-login, .custom-card-body-register {
+        margin: 100px 20px;
+    }
 
-  .card-header-login, .card-header-register {
-      font-size: 50px;
-  }
+    .card-header-login, .card-header-register {
+        font-size: 50px;
+    }
 }
 
 @media (max-width: 768px) {
-  .custom-navbar {
-      margin-left: 20px;
-      margin-right: 20px;
-      font-size: 14px;
-  }
+    .custom-navbar {
+        margin: 0 20px;
+        font-size: 14px;
+    }
 
-  .custom-card-body-login, .custom-card-body-register {
-      margin: 50px 10px;
-      padding: 15px;
-      flex-direction: column;
-  }
+    .custom-card-body-login, .custom-card-body-register {
+        margin: 50px 10px;
+        padding: 15px;
+        flex-direction: column;
+    }
 
-  .card-header-login, .card-header-register {
-      font-size: 40px;
-  }
+    .card-header-login, .card-header-register {
+        font-size: 40px;
+    }
 
-  .form-control {
-      max-width: 100%;
-      font-size: 0.9rem;
-  }
+    .form-control {
+        max-width: 100%;
+        font-size: 0.9rem;
+    }
 
-  #notification {
-      font-size: 0.9rem;
-  }
+    #notification {
+        font-size: 0.9rem;
+    }
 }
 
 @media (max-width: 480px) {
-  .custom-navbar {
-      margin-left: 10px;
-      margin-right: 10px;
-      padding: 5px;
-  }
+    .custom-navbar {
+        margin: 0 10px;
+        padding: 5px;
+    }
 
-  .custom-card-body-login, .custom-card-body-register {
-      margin: 20px 5px;
-      padding: 10px;
-  }
+    .custom-card-body-login, .custom-card-body-register {
+        margin: 20px 5px;
+        padding: 10px;
+    }
 
-  .card-header-login, .card-header-register {
-      font-size: 30px;
-  }
+    .card-header-login, .card-header-register {
+        font-size: 30px;
+    }
 
-  .btn-primary, .btn-info, .btn-success, .btn-danger {
-      font-size: 0.8rem;
-      padding: 5px 10px;
-      padding-top: 5px;  /* Ajuste o espaço acima */
-      padding-bottom: 5px;  /* Ajuste o espaço abaixo */
-      text-align: center;
+    .btn-primary, .btn-info, .btn-success, .btn-danger {
+        font-size: 0.8rem;
+    }
 
-  }
-
-  #notification {
-      width: 95%;
-      max-width: 300px;
-  }
+    #notification {
+        width: 95%;
+        max-width: 300px;
+    }
 }
-
-
-  

@@ -13,10 +13,10 @@
                 <div class="modal-body">
                 <div class="row justify-content-center">
     <div class="col-auto">
-        <button type="button" class="btn btn-success w-15" data-bs-toggle="modal" data-bs-target="#abrirComanda">SIM</button>
+        <button type="button" class="btn btn-success w-30" data-bs-toggle="modal" data-bs-target="#abrirComanda">SIM</button>
     </div>
     <div class="col-auto">
-        <a href="{{ route('clientes.create') }}" class="btn btn-danger w-15">NÃO</a>
+        <a href="{{ route('clientes.create') }}" class="btn btn-danger w-30">NÃO</a>
     </div>
 </div>
                 </div>

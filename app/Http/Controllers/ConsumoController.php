@@ -16,17 +16,16 @@ class ConsumoController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
-        $consumos = Consumo::with('servicos')->get();  // Carrega os consumos com seus serviços
-        $clientes = Cliente::all();  // Pega todos os clientes do banco
-        return view('home', compact('consumos', 'clientes'));  // Passa consumos e clientes para a view
-=======
-        // Pega todos os consumos com as relações de cliente, criança e serviços
-        $consumos = Consumo::with(['cliente', 'crianca', 'servicos'])->get();
+        // Carrega os consumos com as relações de cliente, criança e serviços
+        $consumos = Consumo::with(['cliente', 'crianca', 'servicos'])->get(); 
     
-        return view('consumo.index', compact('consumos'));  // Passa consumos para a view de relatórios
->>>>>>> 4f3cb89935381b853196f7941e9e751aebc8d5ae
+        // Pega todos os clientes para a view
+        $clientes = Cliente::all();  
+    
+        // Passa os consumos e clientes para a view
+        return view('home', compact('consumos', 'clientes'));  
     }
+    
     
 
     /**
