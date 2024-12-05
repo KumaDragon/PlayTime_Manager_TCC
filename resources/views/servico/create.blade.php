@@ -10,6 +10,7 @@
                         Novo serviço
                     </div>
                     <div class="card-body">
+                    <a href="{{route('servicos.index')}}" class="btn btn-info">Voltar</a>
                         
                         @if ($errors->any())
                             <div class="alert alert-danger">

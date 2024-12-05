@@ -33,6 +33,8 @@ Route::resource('/servicos', \App\Http\Controllers\ServicoController::class);
 Route::resource('/clientes', \App\Http\Controllers\ClienteController::class);
 Route::resource('/criancas', \App\Http\Controllers\CriancaController::class);
 Route::resource('/consumo', \App\Http\Controllers\ConsumoController::class);
+Route::resource('users', \App\Http\Controllers\UserController::class);
+
 
 Route::post('consumo/{consumo}/servico/{servico}', [ConsumoController::class, 'servico'])->name('consumo.servico');
 
