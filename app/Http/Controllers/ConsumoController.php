@@ -53,19 +53,29 @@ class ConsumoController extends Controller
     {
         $query = Consumo::with(['cliente', 'crianca', 'servicos'])->where('status', 'finalizado');
     
-        if ($request->has('search')) {
+        // Filtro por busca textual
+        if ($request->filled('search')) {
             $search = $request->input('search');
-            $query->whereHas('cliente', function ($q) use ($search) {
-                $q->where('name', 'like', '%' . $search . '%');
-            })->orWhereHas('crianca', function ($q) use ($search) {
-                $q->where('name', 'like', '%' . $search . '%');
-            })->orWhere('id', $search);
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('cliente', function ($qCliente) use ($search) {
+                    $qCliente->where('name', 'like', '%' . $search . '%');
+                })->orWhereHas('crianca', function ($qCrianca) use ($search) {
+                    $qCrianca->where('name', 'like', '%' . $search . '%');
+                })->orWhere('id', 'like', '%' . $search . '%');
+            });
         }
     
-        $consumos = $query->get();
+        // Filtro por data
+        if ($request->filled('date')) {
+            $query->whereDate('created_at', $request->input('date'));
+        }
+    
+        // Paginação e ordenação
+        $consumos = $query->orderBy('created_at', 'desc')->paginate(10);
     
         return view('relatorios.index', compact('consumos'));
     }
+    
     
     
 

@@ -85,7 +85,7 @@
                     <a href="{{ route('servicos.index') }}" class="btn btn-primary">Serviços</a>
                     <a href="{{ route('clientes.index') }}" class="btn btn-primary">Clientes</a>
                     <a href="{{ route('relatorios.index') }}" class="btn btn-primary">Relatórios</a>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">+ Novo</button>
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#myModal">Nova Comanda</button>
                 </div>
             </div>
 
@@ -144,7 +144,7 @@
         @csrf
         @method('DELETE')
         <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta comanda?')">Excluir</button>
-        <a href="{{ route('recibo.pdf', ['id' => $consumo->id]) }}" class="btn btn-primary" target="_blank">Resumo</a>  
+        <a href="{{ route('recibo.pdf', ['id' => $consumo->id]) }}" class="btn btn-primary"  target="_blank">Resumo</a>  
     </form>
         </td>
     </tr>
