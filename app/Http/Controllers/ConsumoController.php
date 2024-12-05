@@ -76,6 +76,7 @@ class ConsumoController extends Controller
     }
     
     
+    
 
 
     public function create($cliente_id)
