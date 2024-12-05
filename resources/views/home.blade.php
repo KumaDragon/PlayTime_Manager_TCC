@@ -219,6 +219,12 @@ document.addEventListener("DOMContentLoaded", function () {
             const now = new Date().getTime();
             const distance = endTime - now;
 
+            if (distance <= 0) {
+            document.getElementById(elementId).textContent = "00:00:00";
+            clearInterval(interval); // Para o contador
+            return; // Não faça mais nada
+        }
+
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);

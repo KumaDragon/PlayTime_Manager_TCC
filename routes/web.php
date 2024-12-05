@@ -22,6 +22,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/welcome', function () {return view('welcome');})->name('welcome');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/clientes/criancas', [App\Http\Controllers\ClienteController::class, 'showCriancas'])->name('clientes.show');
 Route::get('/relatorios', [ConsumoController::class, 'index'])->name('relatorios.index');
