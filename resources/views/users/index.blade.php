@@ -9,17 +9,6 @@
                 <span>Gerenciamento de Usuários</span>
                 <a href="{{ route('users.create') }}" class="btn btn-secondary mb-0">Novo Usuário</a> <!-- Remover div extra -->
             </div>
-
-                </div>
-
-        @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-        {{ session()->forget('success') }}
-
-        @endif
-
     <table class="table table-striped">
         <thead>
             <tr>
@@ -52,6 +41,14 @@
                     <td colspan="4">Nenhum usuário encontrado.</td>
                 </tr>
             @endforelse
+
+            @if(session('success'))
+    <div id="successMessage" class="alert alert-success position-fixed top-0 end-0 m-3" style="z-index: 1050; animation: fadeOut 5s forwards;">
+        {{ session('success') }}
+    </div>
+    {{ session()->forget('success') }}
+@endif
+
         </tbody>
     </table>
 </div>
