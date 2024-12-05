@@ -16,35 +16,55 @@ class ConsumoController extends Controller
      */
     public function index(Request $request)
     {
-        // Validação dos dados recebidos via requisição
-        $request->validate([
-            'cliente_id' => 'required|exists:clientes,id',
-            'crianca_id' => 'required|exists:criancas,id',
-            'servico_id' => 'required|array|min:1',
-            'servico_id.*' => 'exists:servicos,id',
-        ]);
+        // Cria uma query para buscar os consumos com status 'finalizado'
+        $query = Consumo::with(['servicos', 'cliente', 'crianca'])
+                        ->where('status', 'finalizado'); // Filtra por status 'finalizado'
     
-        // Filtra apenas os consumos com status 'finalizado'
-        $consumos = Consumo::with(['servicos', 'cliente', 'crianca'])
-            ->where('status', 'finalizado')  // Adiciona a condição de filtro
-            ->get();
+        // Verifica se há um termo de busca
+        if ($request->has('search') && $request->search) {
+            $search = $request->search;
+            $query->where(function($query) use ($search) {
+                $query->whereHas('cliente', function($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%");
+                })
+                ->orWhereHas('crianca', function($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%");
+                })
+                ->orWhere('id', 'like', "%{$search}%");
+            });
+        }
+    
+        // Verifica se há uma data
+        if ($request->has('date') && $request->date) {
+            $query->whereDate('created_at', $request->date);
+        }
+
+        // Recupera os consumos filtrados
+        $consumos = $query->get();
     
         $clientes = Cliente::all(); // Mantém os clientes para a view
     
-        // Retorna para a view correta
-        return view('consumo.index', compact('consumos', 'clientes')); // Ajustado para usar a view de relatórios
+        // Retorna a view com os dados filtrados
+        return view('relatorios.index', compact('consumos', 'clientes'));
     }
+    
 
-    public function relatorios()
+    public function relatorios(Request $request)
     {
-        // Obtém apenas os consumos com status 'finalizado'
-        $consumos = Consumo::with(['servicos', 'cliente', 'crianca'])
-            ->where('status', 'finalizado')
-            ->get();
-
-        // Retorna a view correta com os dados
+        $query = Consumo::with(['cliente', 'crianca', 'servicos'])->where('status', 'finalizado');
+    
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->whereHas('cliente', function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%');
+            })->orWhereHas('crianca', function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%');
+            })->orWhere('id', $search);
+        }
+    
+        $consumos = $query->get();
+    
         return view('relatorios.index', compact('consumos'));
-
     }
     
     
