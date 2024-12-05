@@ -25,10 +25,11 @@ body {
     background-repeat: no-repeat;
     background-size: cover; /* Ajusta o fundo para cobrir toda a tela */
     background-position: center; /* Posiciona a imagem no centro */
-    height: 100vh; /* Ocupa 100% da altura da tela */
+    min-height: 100%; /* Garante que a altura mínima do body seja 100% da tela */
     width: 100vw; /* Ocupa 100% da largura da tela */
-    overflow: hidden; /* Evita barras de rolagem se o conteúdo exceder */
+    overflow-x: hidden; /* Impede a rolagem horizontal */
 }
+
 
 #notification {
     width: 90%;
