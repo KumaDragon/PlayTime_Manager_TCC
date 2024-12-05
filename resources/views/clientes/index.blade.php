@@ -28,7 +28,7 @@
 
                                 <tr>
                                     <td>{{$cliente->name}}</td>
-                                    <td>{{$cliente->telefone}}</td>
+                                    <td>{{ '(' . substr($cliente->telefone, 0, 2) . ') ' . substr($cliente->telefone, 2, 5) . '-' . substr($cliente->telefone, 7) }}</td>
                                     <td>
                            @foreach($cliente->criancas as $crianca)
                                 {{$crianca->name}}

@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resumo - Comanda</title>
+    <title>Recibo - Comanda</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Courier New", Courier, monospace;
             font-size: 12px;
             margin: 0;
             padding: 0;
@@ -17,45 +17,55 @@
             max-width: 300px;
             margin: 0 auto;
             padding: 10px;
+            text-align: left;
+        }
+
+        .header, .footer {
             text-align: center;
-        }
-
-        .header {
-            font-size: 14px;
             font-weight: bold;
-            margin-bottom: 10px;
         }
 
-        .info {
+        .divider {
+            margin: 10px 0;
+            border: none;
+            border-top: 1px dashed #000;
+        }
+
+        .info, .total {
             margin-bottom: 5px;
         }
 
         .info span {
+            display: inline-block;
+            width: 100px;
+        }
+
+        .total {
+            margin-top: 15px;
+            font-size: 14px;
             font-weight: bold;
+        }
+
+        .servicos {
+            margin-top: 10px;
+        }
+
+        .servico-item {
+            display: flex;
+            justify-content: space-between;
         }
 
         .footer {
             margin-top: 20px;
             font-size: 10px;
-            color: #777;
-        }
-
-        .total {
-            margin-top: 15px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #000;
-        }
-
-        .divider {
-            margin: 10px 0;
-            border-top: 1px solid #000;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">Recibo - Comanda</div>
+        <div class="header">================ RECIBO ================ </div>
+
+        <br>
 
         <div class="info">
             <span>Cliente:</span> {{ optional($consumo->cliente)->name }}
@@ -63,9 +73,31 @@
         <div class="info">
             <span>Criança:</span> {{ optional($consumo->crianca)->name }}
         </div>
+
+        <div class="divider"></div>
+
         <div class="info">
-            <span>Serviço:</span> {{ optional($consumo->servico)->name }}
+            <span>Atendente:</span> {{ Auth::user()->name }}
         </div>
+
+        <div class="divider"></div>
+
+        @if($consumo->servicos->isNotEmpty())
+            <div class="servicos">
+                <span><strong>Serviços:</strong></span>
+                @foreach ($consumo->servicos as $servico)
+                    <div class="servico-item">
+                        <span>{{ $servico->name }}</span> 
+                        <span>R$ {{ number_format($servico->valor, 2, ',', '.') }}</span>
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <p>Não há serviços associados a esta comanda.</p>
+        @endif
+
+        <div class="divider"></div>
+
         <div class="info">
             <span>Hora Inicial:</span> {{ $consumo->created_at->format('d/m/Y H:i') }}
         </div>
@@ -80,9 +112,15 @@
         </div>
 
         <div class="footer">
-            <p>PlayTime Manager v1.0</p>
-            <p>Obrigado pela preferência!</p>
-            <p>{{ now()->format('d/m/Y H:i') }}</p>
+
+        <div class="divider"></div>
+
+        <p style="margin-top: 10px; font-size: 10px; font-weight: bold; text-transform: uppercase; ">Este documento não é um cupom fiscal</p>
+
+        <div class="divider"></div>
+            Obrigado pela preferência!<br>
+            PlayTime Manager v1.0<br>
+            {{ now()->format('d/m/Y H:i') }}
         </div>
     </div>
 </body>
