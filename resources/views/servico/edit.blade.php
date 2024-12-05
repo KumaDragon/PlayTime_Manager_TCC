@@ -2,24 +2,24 @@
 
 @section('content')
 
-        <!-- Tabela -->
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card-services">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <span>Serviços</span>
+<!-- Tabela -->
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>Editar Serviço</span>
 
-                        <a href="{{route('servicos.index')}}" class="btn btn-info">Voltar</a>
-                    </div>
+                <a href="{{route('servicos.index')}}" class="btn btn-info">Voltar</a>
+            </div>
 
-                    <div class="card-body-service">
-                    <form id="serviceForm" action="{{route('servicos.update', $servico)}}" method="post">
+            <div class="card-body">
+                <form id="serviceForm" action="{{route('servicos.update', $servico)}}" method="post">
                     @csrf
                     @method("PUT")
                     <input type="hidden" id="serviceId" name="id"> 
 
                     <div class="form-group mt-3">
-                        <label for="name">Brinquedo</label>             <!-- o value com a variavel $servico serve pra mostrar o atual, que está sendo mostrado-->
+                        <label for="name">Brinquedo</label>
                         <input type="text" id="name" name="name" value="{{$servico->name}}" class="form-control" required>
                     </div>
 
@@ -37,10 +37,9 @@
                         <button type="submit" class="btn btn-success w-100">Salvar</button>
                     </div>
                 </form>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
-@endsection
+</div>
 
+@endsection
