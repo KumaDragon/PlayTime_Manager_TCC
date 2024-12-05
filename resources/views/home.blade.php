@@ -144,7 +144,7 @@
         @csrf
         @method('DELETE')
         <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta comanda?')">Excluir</button>
-        <!-- <a href="{{ route('recibo.pdf', ['id' => $consumo->id]) }}" class="btn btn-primary" target="_blank">Resumo</a>  -->
+        <a href="{{ route('recibo.pdf', ['id' => $consumo->id]) }}" class="btn btn-primary" target="_blank">Resumo</a>  
     </form>
         </td>
     </tr>
@@ -177,7 +177,6 @@
                         </ul>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                     </div>
                 </div>
             </div>

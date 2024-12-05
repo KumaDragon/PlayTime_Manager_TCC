@@ -34,7 +34,7 @@
                             </div>
                             <div class="form-group mt-3">
                                 <label for="">Telefone</label>
-                                <input type="text" name="telefone" class="form-control" id="telefone" oninput="formatarTelefone(this)">
+                                <input type="text" name="telefone" class="form-control" id="telefone" maxlength="15" oninput="formatarTelefone(this)" pattern="\(\d{2}\) \d{5}-\d{4}" title="Formato: (00) 00000-0000">
                             </div>
                             <div class="form-group mt-3">
                                 <button class="btn btn-success w-30">Cadastrar</button>
@@ -51,14 +51,19 @@
 @endsection
 @section('js')
 <script>
-function formatarTelefone(input) {
-    let telefone = input.value.replace(/\D/g, ''); // Remove qualquer caractere não numérico
-    if (telefone.length <= 10) {
-        telefone = telefone.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3'); // Formato (XX) XXXXX-XXXX
-    } else {
-        telefone = telefone.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3'); // Formato (XX) XXXXX-XXXX
+    function formatarTelefone(campo) {
+        let valor = campo.value.replace(/\D/g, ''); // Remove tudo que não é dígito
+        if (valor.length > 11) valor = valor.slice(0, 11); // Limita a 11 dígitos
+
+        if (valor.length > 10) {
+            campo.value = `(${valor.slice(0, 2)}) ${valor.slice(2, 7)}-${valor.slice(7)}`;
+        } else if (valor.length > 6) {
+            campo.value = `(${valor.slice(0, 2)}) ${valor.slice(2, 6)}-${valor.slice(6)}`;
+        } else if (valor.length > 2) {
+            campo.value = `(${valor.slice(0, 2)}) ${valor.slice(2)}`;
+        } else {
+            campo.value = valor;
+        }
     }
-    input.value = telefone; // Atualiza o valor do campo com a máscara
-}
 </script>
 @endsection
