@@ -44,4 +44,3 @@ Route::get('consumo/{consumo}', [ConsumoController::class, 'show'])->name('consu
 Route::post('/consumo/{consumo}/servico', [ConsumoController::class, 'servico'])->name('consumo.servico');
 
 Route::get('/recibo/pdf/{id}', [App\Http\Controllers\ReciboController::class, 'gerarReciboPDF'])->name('recibo.pdf');
-

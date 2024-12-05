@@ -116,37 +116,46 @@ class ConsumoController extends Controller
         return redirect(url('home'));
     }
 
-    public function finalizar($id)
+    public function finalizar($id, Request $request)
     {
         $consumo = Consumo::find($id);
-        
+    
         if ($consumo) {
-            // Verifique se o status da comanda é 'pendente' antes de finalizar
-            if ($consumo->status !== 'pendente') {
-                return redirect()->route('home')->with('error', 'Comanda não pode ser finalizada. Status inválido.');
+            $metodoPagamento = $request->input('metodo_pagamento');
+    
+            // Validação do método de pagamento
+            if (!in_array($metodoPagamento, ['debito', 'credito', 'pix', 'dinheiro'])) {
+                return redirect()->back()->withErrors('Método de pagamento inválido.');
             }
     
-            $consumo->status = 'finalizado';  // Atualiza o status
+            // Atualiza os dados no banco
+            $consumo->status = 'finalizado';
+            $consumo->metodo_pagamento = $metodoPagamento;
             $consumo->save();
-        
-            return redirect()->route('consumo.pagamento', $consumo->id)->with('success', 'Comanda finalizada com sucesso!');
+    
+            // Redireciona para a home por padrão
+            return redirect()->route('home')->with('success', 'Comanda finalizada com sucesso!');
         }
-        
+    
+        // Caso a comanda não exista
         return redirect()->route('home')->with('error', 'Comanda não encontrada.');
     }
+    
+    
+    public function up()
+{
+    Schema::table('consumos', function (Blueprint $table) {
+        $table->string('metodo_pagamento')->nullable();
+    });
+}
 
-        public function pagamento(Consumo $consumo)
-    {
-        // Verifica se o consumo existe e se está finalizado
-        if (!$consumo || $consumo->status !== 'finalizado') {
-            return redirect()->route('home')->with('error', 'Comanda não finalizada.');
-        }
 
-        // Lógica adicional pode ser adicionada aqui, caso necessário (ex: calcular total, etc.)
+public function pagamento(Consumo $consumo)
+{
+    // Permite o acesso à tela de pagamento independentemente do status
+    return view('pagamento.index', compact('consumo'));
+}
 
-        // Retorna para a view de pagamento, passando os dados necessários
-        return view('pagamento.index', compact('consumo'));
-    }
     public function show(Consumo $consumo)
     {
         // Verifica se o consumo está finalizado

@@ -31,7 +31,17 @@ class Consumo extends Model
     return $this->servicos->sum('tempo');
     }
 
-
+    public function getMetodoPagamentoFormatadoAttribute()
+    {
+        $metodos = [
+            'debito' => 'Débito',
+            'credito' => 'Crédito',
+            'pix' => 'Pix',
+            'dinheiro' => 'Dinheiro',
+        ];
+    
+        return $metodos[$this->metodo_pagamento] ?? 'Não especificado';
+    }
 
 
     public function cliente()

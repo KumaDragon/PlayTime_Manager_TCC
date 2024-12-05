@@ -132,13 +132,24 @@
         </td>
         <td>
 
+        
+
+
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#servicosModal{{ $consumo->id }}">
             Detalhes
         </button>
+     
+        <form action="{{ route('consumo.pagamento', $consumo->id) }}" method="GET">
+            <button class="btn btn-success" style="margin-top: 10px; margin-bottom: 10px;">Pagamento</button>
+        </form>
+
+
+         <!-- PASSAR FINALIZAR PARA TELA DE PAGAMENTO        
         <form action="{{ route('consumo.finalizar', $consumo->id) }}" method="POST">
         @csrf
+        @method('PUT')
         <button class="btn btn-success" style="margin-top: 10px; margin-bottom: 10px;">Finalizar</button>
-        </form>
+        </form> --> 
 
         <form action="{{ route('consumo.destroy', $consumo->id) }}" method="POST" class="d-inline">
         @csrf

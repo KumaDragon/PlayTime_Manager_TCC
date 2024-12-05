@@ -25,8 +25,10 @@
                 <th>Cliente</th>
                 <th>Criança</th>
                 <th>Valor Total</th>
+                <th>Forma de Pagamento</th>
                 <th>Tempo Total</th>
                 <th>Data</th> <!-- Coluna para exibir a data -->
+                <th>Recibo</th>
             </tr>
         </thead>
         <tbody>
@@ -36,8 +38,10 @@
                     <td>{{ $consumo->cliente->name }}</td>
                     <td>{{ $consumo->crianca->name }}</td>
                     <td>R$ {{ number_format($consumo->servicos->sum('valor'), 2, ',', '.') }}</td>
+                    <td>{{ $consumo->metodo_pagamento_formatado}}</td>
                     <td>{{ $consumo->totalTempo() }} min</td>
                     <td>{{ $consumo->created_at->format('d/m/Y') }}</td>
+                    <td><a href="{{ route('recibo.pdf', ['id' => $consumo->id]) }}" class="btn btn-primary" target="_blank">Imprimir</a></td>
                 </tr>
             @endforeach
         </tbody>
