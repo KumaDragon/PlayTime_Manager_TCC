@@ -48,21 +48,29 @@ class ConsumoController extends Controller
         return view('relatorios.index', compact('consumos', 'clientes'));
     }
     
-
     public function relatorios(Request $request)
     {
         $query = Consumo::with(['cliente', 'crianca', 'servicos'])->where('status', 'finalizado');
     
-        if ($request->has('search')) {
+        // Filtro por busca textual
+        if ($request->filled('search')) {
             $search = $request->input('search');
-            $query->whereHas('cliente', function ($q) use ($search) {
-                $q->where('name', 'like', '%' . $search . '%');
-            })->orWhereHas('crianca', function ($q) use ($search) {
-                $q->where('name', 'like', '%' . $search . '%');
-            })->orWhere('id', $search);
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('cliente', function ($qCliente) use ($search) {
+                    $qCliente->where('name', 'like', '%' . $search . '%');
+                })->orWhereHas('crianca', function ($qCrianca) use ($search) {
+                    $qCrianca->where('name', 'like', '%' . $search . '%');
+                })->orWhere('id', 'like', '%' . $search . '%');
+            });
         }
     
-        $consumos = $query->get();
+        // Filtro por data
+        if ($request->filled('date')) {
+            $query->whereDate('created_at', $request->input('date'));
+        }
+    
+        // Paginação e ordenação
+        $consumos = $query->orderBy('created_at', 'desc')->paginate(10);
     
         return view('relatorios.index', compact('consumos'));
     }
@@ -110,28 +118,59 @@ class ConsumoController extends Controller
     public function finalizar($id)
     {
         $consumo = Consumo::find($id);
-    
+        
         if ($consumo) {
+            // Verifique se o status da comanda é 'pendente' antes de finalizar
+            if ($consumo->status !== 'pendente') {
+                return redirect()->route('home')->with('error', 'Comanda não pode ser finalizada. Status inválido.');
+            }
+    
             $consumo->status = 'finalizado';  // Atualiza o status
             $consumo->save();
-    
-            return redirect()->route('consumo.index')->with('success', 'Comanda finalizada com sucesso!');
+        
+            return redirect()->route('consumo.pagamento', $consumo->id)->with('success', 'Comanda finalizada com sucesso!');
         }
-    
+        
         return redirect()->route('home')->with('error', 'Comanda não encontrada.');
     }
-    
-    
 
+        public function pagamento(Consumo $consumo)
+    {
+        // Verifica se o consumo existe e se está finalizado
+        if (!$consumo || $consumo->status !== 'finalizado') {
+            return redirect()->route('home')->with('error', 'Comanda não finalizada.');
+        }
+
+        // Lógica adicional pode ser adicionada aqui, caso necessário (ex: calcular total, etc.)
+
+        // Retorna para a view de pagamento, passando os dados necessários
+        return view('pagamento.index', compact('consumo'));
+    }
     public function show(Consumo $consumo)
     {
-        // Passar os dados para a view
-        return view('home', [
-            'consumo' => $consumo,
-            'servicos' => $consumo->servicos,
-            'valor_total' => $consumo->servicos->sum('valor'),
-            'tempo_total' => $consumo->totalTempo(),
-        ]);
+        // Verifica se o consumo está finalizado
+        if ($consumo->status !== 'finalizado') {
+            return redirect()->route('home')->with('error', 'Comanda não finalizada.');
+        }
+
+        // Exibe a view de pagamento com os detalhes do consumo
+        return view('pagamento.index', compact('consumo'));
+    }
+
+    // Confirma o pagamento e altera o status da comanda
+    public function confirmarPagamento(Consumo $consumo)
+    {
+        // Verifica se o consumo está finalizado
+        if ($consumo->status !== 'finalizado') {
+            return redirect()->route('home')->with('error', 'Comanda não finalizada.');
+        }
+    
+        // Atualiza o status da comanda para 'pago'
+        $consumo->status = 'pago';
+        $consumo->save();
+    
+        // Redireciona para os relatórios após o pagamento
+        return redirect()->route('relatorios.index')->with('success', 'Pagamento confirmado!');
     }
 
     public function edit(Consumo $consumo)

@@ -85,7 +85,7 @@
                     <a href="{{ route('servicos.index') }}" class="btn btn-primary">Serviços</a>
                     <a href="{{ route('clientes.index') }}" class="btn btn-primary">Clientes</a>
                     <a href="{{ route('relatorios.index') }}" class="btn btn-primary">Relatórios</a>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">+ Novo</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">+ Nova comanda</button>
                 </div>
             </div>
 
@@ -136,10 +136,10 @@
             Serviços
         </button>
         <form action="{{ route('consumo.finalizar', $consumo->id) }}" method="POST">
-            @csrf
-            @method('PUT')
-            <button class="btn btn-success"style="margin-top: 10px; margin-bottom: 10px;">Finalizar</button>
+        @csrf
+        <button class="btn btn-success" style="margin-top: 10px; margin-bottom: 10px;">Finalizar</button>
         </form>
+
         <form action="{{ route('consumo.destroy', $consumo->id) }}" method="POST" class="d-inline">
         @csrf
         @method('DELETE')
