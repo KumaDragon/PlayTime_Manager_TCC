@@ -21,6 +21,7 @@ class ServicoController extends Controller
 
     public function store(Request $request)
     {
+        $request->merge(['valor' => str_replace(['R$', '.', ','], ['', '', '.'], $request->valor)]);
 
         $validated = $request->validate([
             'name' => 'required|string|min:3|max:255',
@@ -59,6 +60,9 @@ class ServicoController extends Controller
 
     public function update(Request $request, Servico $servico)
     {
+
+    $request->merge(['valor' => str_replace(['R$', '.', ','], ['', '', '.'], $request->valor)]);
+    
     $validated = $request->validate([
         'name' => 'required|string|max:255',
         'tempo' => 'required|numeric|min:1',

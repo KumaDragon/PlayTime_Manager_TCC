@@ -116,7 +116,7 @@
             <form action="{{ route('consumo.servico', ['consumo' => $consumo->id]) }}" method="POST">
                 @csrf
                 <div class="form-group">
-                    <select name="servico_id" id="servico_id" class="form-control" onchange="atualizarValores()">
+                    <select name="servico_id" id="servico_id" class="form-control w-50" onchange="atualizarValores()">
                         <option value="">Escolha um serviço</option>
                         @foreach($servicos as $servico)
                             <option value="{{ $servico->id }}" data-tempo="{{ $servico->tempo }}" data-valor="{{ $servico->valor }}">
@@ -124,22 +124,11 @@
                             </option>
                         @endforeach
                     </select>
+                    <form action="{{ route('consumo.store') }}" method="POST" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-success"style="margin-top: 10px; margin-bottom: 10px;">Adicionar</button>
+                    </form>
                 </div>
-
-                <div class="form-group mt-3 d-flex gap-2">
-    <form action="{{ route('consumo.store') }}" method="POST" class="d-inline">
-        @csrf
-        <button type="submit" class="btn btn-success">Adicionar Serviço</button>
-
-
-    </form>
-
-
-</div>
-
-
-
-
         </td>
         <td>
 
@@ -149,20 +138,14 @@
         <form action="{{ route('consumo.finalizar', $consumo->id) }}" method="POST">
             @csrf
             @method('PUT')
-            <button class="btn btn-success">Finalizar</button>
+            <button class="btn btn-success"style="margin-top: 10px; margin-bottom: 10px;">Finalizar</button>
         </form>
-            <div class="form-group mt-3">
-    <a href="{{ route('recibo.pdf', ['id' => $consumo->id]) }}" class="btn btn-primary" target="_blank">Resumo</a>
-    
-    <form action="{{ route('consumo.destroy', $consumo->id) }}" method="POST" class="d-inline">
+        <form action="{{ route('consumo.destroy', $consumo->id) }}" method="POST" class="d-inline">
         @csrf
         @method('DELETE')
         <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta comanda?')">Excluir</button>
+        <!-- <a href="{{ route('recibo.pdf', ['id' => $consumo->id]) }}" class="btn btn-primary" target="_blank">Resumo</a>  -->
     </form>
-
-</div>
-
-
         </td>
     </tr>
 @empty

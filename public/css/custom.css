@@ -130,8 +130,6 @@ body {
     text-decoration-thickness: 1px;
     text-shadow: none;
     font-family: "Poppins", sans-serif;
-    padding-top: 5px;  /* Ajuste o espaço acima */
-    padding-bottom: 5px;  /* Ajuste o espaço abaixo */
     text-align: center;
 
 }
@@ -155,8 +153,6 @@ body {
     color: #f5f5dc;
     font-family: "Poppins", sans-serif;
     cursor: pointer;
-    padding-top: 5px;  /* Ajuste o espaço acima */
-    padding-bottom: 5px;  /* Ajuste o espaço abaixo */
     text-align: center;
 
 }
@@ -184,10 +180,10 @@ body {
  .card-body{
     border:none;
     border-radius: 20px; /* Bordas arredondadas */
-    padding: 10px; /* Espaçamento interno */
+    padding: 15px; /* Espaçamento interno */
     font-size: 1rem; /* Tamanho do texto */
     transition: all 0.3s ease; /* Transição suave ao focar */
-  font-family: "Poppins", sans-serif;
+    font-family: "Poppins", sans-serif;
     align-items: center;
     justify-content: center;
 
@@ -202,8 +198,6 @@ body {
     color: #f5f5dc;
     font-family: "Poppins", sans-serif;
     cursor: pointer;
-    padding-top: 5px;  /* Ajuste o espaço acima */
-    padding-bottom: 5px;  /* Ajuste o espaço abaixo */
     text-align: center;
 
   }
@@ -211,11 +205,11 @@ body {
   .modal-body{
     background-color: #03CEA4;
     color: #fff;
-  font-family: "Poppins", sans-serif;
+    font-family: "Poppins", sans-serif;
   }
   .modal-header{
     color: #fff;
-  font-family: "Poppins", sans-serif;
+    font-family: "Poppins", sans-serif;
     font-size: 20px;
   }
   .modal-content{
@@ -229,8 +223,6 @@ body {
     text-shadow: 1px 1px 1px black;
     color: #fff;
     font-family: "Poppins", sans-serif;
-    padding-top: 5px;  /* Ajuste o espaço acima */
-    padding-bottom: 5px;  /* Ajuste o espaço abaixo */
     text-align: center;
 
   }
@@ -244,8 +236,6 @@ body {
     color: #f5f5dc;
     font-family: "Poppins", sans-serif;
     cursor: pointer;
-    padding-top: 5px;  /* Ajuste o espaço acima */
-    padding-bottom: 5px;  /* Ajuste o espaço abaixo */
     text-align: center;
 
  }
@@ -339,8 +329,6 @@ body {
   .btn-primary, .btn-info, .btn-success, .btn-danger {
       font-size: 0.8rem;
       padding: 5px 10px;
-      padding-top: 5px;  /* Ajuste o espaço acima */
-      padding-bottom: 5px;  /* Ajuste o espaço abaixo */
       text-align: center;
 
   }
