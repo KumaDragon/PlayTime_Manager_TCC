@@ -18,20 +18,19 @@ class ReciboController extends Controller
 
     public function gerarReciboPDF($id)
     {
-        // Busca os dados do consumo
-        $consumo = Consumo::find($id);
+        // Busca os dados do consumo junto com os serviços relacionados
+        $consumo = Consumo::with('servicos')->find($id);
 
         // Verifica se o consumo foi encontrado
         if (!$consumo) {
             return abort(404, 'Comanda não encontrada');
         }
-        
 
+        // Renderiza a view com os dados do consumo
         return view('recibo', compact('consumo'));
-        // Gera o PDF usando a view
-        //$pdf = $this->pdf->loadView('recibo', compact('consumo'));
 
-        // Retorna o PDF para o download ou visualização
-        //return $pdf->stream('recibo.pdf');
+        // Gera o PDF (se necessário futuramente)
+        // $pdf = $this->pdf->loadView('recibo', compact('consumo'));
+        // return $pdf->stream('recibo.pdf');
     }
 }

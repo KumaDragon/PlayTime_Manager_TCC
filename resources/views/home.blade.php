@@ -77,20 +77,15 @@
         </div>
     </div>
 
-    <!-- Mensagem de serviço finalizado -->
-    <div id="serviceFinishedMessage" class="alert alert-success position-fixed top-50 start-50 translate-middle" style="display:none; z-index:9999;">
-        Serviço finalizado!
-    </div>
-
     <!-- Tabela de Consumos -->
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-10">
             <div class="card mb-3">
                 <div class="card-body d-flex justify-content-start gap-2">
                     <a href="{{ route('servicos.index') }}" class="btn btn-primary">Serviços</a>
                     <a href="{{ route('clientes.index') }}" class="btn btn-primary">Clientes</a>
-                    <a href="{{ route('consumo.index') }}" class="btn btn-primary">Relatórios</a>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">+ Novo</button>
+                    <a href="{{ route('relatorios.index') }}" class="btn btn-primary">Relatórios</a>
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#myModal">Nova Comanda</button>
                 </div>
             </div>
 
@@ -99,13 +94,13 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Cliente</th>
-                                <th>Criança</th>
-                                <th>Hora Final</th>
-                                <th>Contador</th>
-                                <th>Total</th>
-                                <th>Ações</th>
-                                <th>Comanda</th>
+                            <th style="width: 15%;">Cliente</th>
+                            <th style="width: 20%;">Criança</th>
+                            <th style="width: 15%;">Hora Final</th>
+                            <th style="width: 5%;">Contador</th>
+                            <th style="width: 15%;">Total</th>
+                            <th style="width: 20%;">Ações</th>
+                            <th style="width: 10%;">Comanda</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -122,50 +117,35 @@
                 @csrf
                 <div class="form-group">
                     <select name="servico_id" id="servico_id" class="form-control" onchange="atualizarValores()">
-                        <option value="">Escolha um serviço</option>
+                        <option value="">Serviço</option>
                         @foreach($servicos as $servico)
                             <option value="{{ $servico->id }}" data-tempo="{{ $servico->tempo }}" data-valor="{{ $servico->valor }}">
                                 {{ $servico->name }} - {{ $servico->tempo }} min - R$ {{ number_format($servico->valor, 2, ',', '.') }}
                             </option>
                         @endforeach
                     </select>
+                    <form action="{{ route('consumo.store') }}" method="POST" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-success"style="margin-top: 10px; margin-bottom: 10px;">Adicionar</button>
+                    </form>
                 </div>
-
-
-                <div class="form-group mt-3 d-flex gap-2">
-    <form action="{{ route('consumo.store') }}" method="POST" class="d-inline">
-        @csrf
-        <button type="submit" class="btn btn-success">Adicionar Serviço</button>
-
-
-    </form>
-
-
-</div>
-
         </td>
         <td>
 
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#servicosModal{{ $consumo->id }}">
-            Serviços
+            Detalhes
         </button>
-            <form action="{{ route('consumo.destroy', $consumo->id) }}" method="POST" class="d-inline">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-success" onclick="return confirm('Tem certeza que deseja finalizar esta comanda?')">Finalizar</button>
-            </form>
-            <div class="form-group mt-3">
-    <a href="{{ route('recibo.pdf', ['id' => $consumo->id]) }}" class="btn btn-primary" target="_blank">Resumo</a>
-    
-    <form action="{{ route('consumo.destroy', $consumo->id) }}" method="POST" class="d-inline">
+        <form action="{{ route('consumo.finalizar', $consumo->id) }}" method="POST">
+        @csrf
+        <button class="btn btn-success" style="margin-top: 10px; margin-bottom: 10px;">Finalizar</button>
+        </form>
+
+        <form action="{{ route('consumo.destroy', $consumo->id) }}" method="POST" class="d-inline">
         @csrf
         @method('DELETE')
         <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta comanda?')">Excluir</button>
+    <!-- <a href="{{ route('recibo.pdf', ['id' => $consumo->id]) }}" class="btn btn-primary"  target="_blank">Resumo</a>  -->        
     </form>
-
-</div>
-
-
         </td>
     </tr>
 @empty
@@ -174,10 +154,12 @@
     </tr>
 @endforelse
 @if(session('success'))
-    <div id="successMessage" class="alert alert-success position-fixed top-0 end-0 m-3" style="z-index: 1050;">
+    <div id="successMessage" class="alert alert-success position-fixed top-0 end-0 m-3" style="z-index: 1050; animation: fadeOut 5s forwards;">
         {{ session('success') }}
     </div>
+    {{ session()->forget('success') }}
 @endif
+
 @foreach($consumos as $consumo)
 
 
@@ -197,7 +179,6 @@
                         </ul>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                     </div>
                 </div>
             </div>
@@ -231,28 +212,12 @@ document.addEventListener("DOMContentLoaded", function () {
             "{{ optional($consumo->crianca)->name }}"
         );
     @endforeach
-
-    // Ocultar mensagem de sucesso após 5 segundos
-    const successMessage = document.getElementById('successMessage');
-    if (successMessage) {
-        setTimeout(() => {
-            successMessage.style.display = 'none'; // Esconde a mensagem
-        }, 5000);
-    }
 });
 
-function updateCountdown(endTime, elementId, clienteName, criancaName) {
-    let notified = false; // Variável para controlar a exibição da notificação
-
-    const interval = setInterval(() => {
-        const now = new Date().getTime();
-        const distance = endTime - now;
-
-        if (distance <= 0) {
-            document.getElementById(elementId).textContent = "00:00:00";
-            clearInterval(interval);
-            return;
-        }
+    function updateCountdown(endTime, elementId, clienteName, criancaName) {
+        const interval = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = endTime - now;
 
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));

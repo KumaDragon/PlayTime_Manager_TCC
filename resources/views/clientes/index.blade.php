@@ -6,7 +6,7 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span>Cliente</span>
+                        <span>Clientes</span>
                         <a href="{{route('clientes.create')}}" class="btn btn-primary">+Novo</a>
                         <a href="{{route('home')}}" class="btn btn-primary">Voltar</a>
                     </div>
@@ -28,7 +28,7 @@
 
                                 <tr>
                                     <td>{{$cliente->name}}</td>
-                                    <td>{{$cliente->telefone}}</td>
+                                    <td>{{ '(' . substr($cliente->telefone, 0, 2) . ') ' . substr($cliente->telefone, 2, 5) . '-' . substr($cliente->telefone, 7) }}</td>
                                     <td>
                            @foreach($cliente->criancas as $crianca)
                                 {{$crianca->name}}
