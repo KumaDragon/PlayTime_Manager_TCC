@@ -7,8 +7,10 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span>Relatórios</span>
-                    <a href="{{route('home')}}" class="btn btn-primary">Voltar</a>
 
+                    <div class="d-flex gap-2">
+                    <a href="{{route('home')}}" class="btn btn-primary">Voltar</a>
+                    </div>
                     </div>
 <!-- Barra de busca -->
 <form action="{{ route('relatorios.index') }}" method="GET" class="d-flex mb-4" style="width: 100%; align-items: center; justify-content: center; margin-top: 20px; padding: 0 20px;">

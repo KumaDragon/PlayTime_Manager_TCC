@@ -31,9 +31,16 @@
             <div class="container">
 
             <!-- logo-->
-                <a class="navbar-brand custom-navbar-brand" href="{{ url('/') }}">
-                <img src="{{ asset('images/playtimeLogo.png') }}" alt="Logo" style="height: 90px;">
-                </a>
+            <a class="navbar-brand custom-navbar-brand" href="{{ url('/welcome') }}">
+    <img src="{{ asset('images/playtimeLogo.png') }}" alt="Logo" style="height: 90px;">
+</a>
+
+<div class="d-flex gap-2">
+    <a href="{{ route('servicos.index') }}" class="btn btn-primary opacity-100">Serviços</a>
+    <a href="{{ route('clientes.index') }}" class="btn btn-primary opacity-100">Clientes</a>
+    <a href="{{ route('relatorios.index') }}" class="btn btn-primary opacity-100">Relatórios</a>
+    <a href="{{ route('home') }}" class="btn btn-primary opacity-100">Comandas</a>
+</div>
 
 
                 <!-- botão de alternancia para telas pequenas -->
@@ -108,6 +115,10 @@
 
     <!-- Extra JS -->
     @yield('js')
+    <!--     <footer class="text-center mt-5 mb-3">
+    <small>PlayTime Manager v1.0 - 2024</small> -->
+</footer>
+
 </body>
 </html>
 

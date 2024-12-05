@@ -1,17 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1 class="mb-4">Gerenciamento de Usuários</h1>
-    <a href="{{ route('users.create') }}" class="btn btn-secondary mb-3">Novo Usuário</a>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>Gerenciamento de Usuários</span>
+                <a href="{{ route('users.create') }}" class="btn btn-secondary mb-0">Novo Usuário</a> <!-- Remover div extra -->
+            </div>
+
+                </div>
 
         @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
+        {{ session()->forget('success') }}
+
         @endif
 
-    <table class="table table-bordered">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>ID</th>

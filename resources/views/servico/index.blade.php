@@ -7,8 +7,12 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span>Serviços</span>
-                    <a href="{{ route('servicos.create') }}" class="btn btn-primary">+Novo</a>
+
+                    <div class="d-flex gap-2">
+                    <a href="{{ route('servicos.create') }}" class="btn btn-secondary">+ Novo</a>
                     <a href="{{ route('home') }}" class="btn btn-primary">Voltar</a>
+                    </div>
+
                 </div>
 
                 <div class="card-body-service">

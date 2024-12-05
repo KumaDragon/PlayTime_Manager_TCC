@@ -1,6 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
+
+<div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mb-3">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Comandas</span>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#myModal">Nova Comanda</button>
+                        <a href="{{ route('home') }}" class="btn btn-primary">Voltar</a>
+                    </div>
+                    </div>
+
 <div class="container">
     <!-- Modal de Confirmação -->
     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -79,18 +92,8 @@
 
     <!-- Tabela de Consumos -->
     <div class="row justify-content-center">
-        <div class="col-md-10">
-            <div class="card mb-3">
-                <div class="card-body d-flex justify-content-start gap-2">
-                    <a href="{{ route('servicos.index') }}" class="btn btn-primary">Serviços</a>
-                    <a href="{{ route('clientes.index') }}" class="btn btn-primary">Clientes</a>
-                    <a href="{{ route('relatorios.index') }}" class="btn btn-primary">Relatórios</a>
-                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#myModal">Nova Comanda</button>
-                </div>
-            </div>
 
-            <div class="card">
-                <div class="card-body">
+
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -131,10 +134,6 @@
                 </div>
         </td>
         <td>
-
-        
-
-
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#servicosModal{{ $consumo->id }}">
             Detalhes
         </button>
@@ -142,20 +141,10 @@
         <form action="{{ route('consumo.pagamento', $consumo->id) }}" method="GET">
             <button class="btn btn-success" style="margin-top: 10px; margin-bottom: 10px;">Pagamento</button>
         </form>
-
-
-         <!-- PASSAR FINALIZAR PARA TELA DE PAGAMENTO        
-        <form action="{{ route('consumo.finalizar', $consumo->id) }}" method="POST">
-        @csrf
-        @method('PUT')
-        <button class="btn btn-success" style="margin-top: 10px; margin-bottom: 10px;">Finalizar</button>
-        </form> --> 
-
         <form action="{{ route('consumo.destroy', $consumo->id) }}" method="POST" class="d-inline">
         @csrf
         @method('DELETE')
         <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta comanda?')">Excluir</button>
-    <!-- <a href="{{ route('recibo.pdf', ['id' => $consumo->id]) }}" class="btn btn-primary"  target="_blank">Resumo</a>  -->        
     </form>
         </td>
     </tr>
@@ -201,8 +190,6 @@
 
                         </tbody>
                     </table>
-                </div>
-            </div>
         </div>
     </div>
 </div>

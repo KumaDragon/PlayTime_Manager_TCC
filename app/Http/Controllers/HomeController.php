@@ -30,7 +30,13 @@ class HomeController extends Controller
         $clientes = Cliente::with('criancas')->get();
         $criancas = Crianca::all();
         $servicos = Servico::all();
-        $consumos = Consumo::with('cliente', 'crianca')->get(); // Carregando cliente e crianca
+        
+        // Alterando a query para buscar apenas consumos com status 'pendente'
+        $consumos = Consumo::with('cliente', 'crianca')
+                            ->where('status', 'pendente') // Filtra os consumos pendentes
+                            ->get();
+    
         return view('home', compact('consumos', 'servicos', 'clientes', 'criancas'));
     }
+    
 }
