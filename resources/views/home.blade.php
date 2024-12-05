@@ -154,10 +154,12 @@
     </tr>
 @endforelse
 @if(session('success'))
-    <div id="successMessage" class="alert alert-success position-fixed top-0 end-0 m-3" style="z-index: 1050;">
+    <div id="successMessage" class="alert alert-success position-fixed top-0 end-0 m-3" style="z-index: 1050; animation: fadeOut 5s forwards;">
         {{ session('success') }}
     </div>
+    {{ session()->forget('success') }}
 @endif
+
 @foreach($consumos as $consumo)
 
 
@@ -210,17 +212,7 @@ document.addEventListener("DOMContentLoaded", function () {
             "{{ optional($consumo->crianca)->name }}"
         );
     @endforeach
-
-    // Ocultar mensagem de sucesso após 5 segundos
-    const successMessage = document.getElementById('successMessage');
-    if (successMessage) {
-        setTimeout(() => {
-            successMessage.style.display = 'none'; // Esconde a mensagem
-        }, 5000);
-    }
 });
-
-
 
     function updateCountdown(endTime, elementId, clienteName, criancaName) {
         const interval = setInterval(() => {
