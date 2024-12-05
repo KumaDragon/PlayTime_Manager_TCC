@@ -13,10 +13,10 @@
                 <div class="modal-body">
                 <div class="row justify-content-center">
     <div class="col-auto">
-        <button type="button" class="btn btn-success w-15" data-bs-toggle="modal" data-bs-target="#abrirComanda">SIM</button>
+        <button type="button" class="btn btn-success w-30" data-bs-toggle="modal" data-bs-target="#abrirComanda">SIM</button>
     </div>
     <div class="col-auto">
-        <a href="{{ route('clientes.create') }}" class="btn btn-danger w-15">NÃO</a>
+        <a href="{{ route('clientes.create') }}" class="btn btn-danger w-30">NÃO</a>
     </div>
 </div>
                 </div>
@@ -219,18 +219,31 @@ document.addEventListener("DOMContentLoaded", function () {
             const now = new Date().getTime();
             const distance = endTime - now;
 
-            if (distance <= 0) {
-                document.getElementById(elementId).textContent = "00:00:00";
-                clearInterval(interval);
-                return;
-            }
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            document.getElementById(elementId).textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        }, 1000);
-    }
+        // Atualizar o contador na tela
+        document.getElementById(elementId).textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+        // Verificar se o contador chegou a 30 segundos e mostrar a notificação
+        if (seconds === 30 && !notified) {
+            showNotification(`O tempo de ${clienteName} para a criança ${criancaName} está finalizando em 30 segundos!`);
+            notified = true; // Garantir que a notificação seja exibida apenas uma vez
+        }
+    }, 1000);
+}
+
+function showNotification(message) {
+    const notification = document.getElementById("notification");
+    notification.textContent = message;
+    notification.style.display = "block"; // Exibe a notificação
+
+    setTimeout(() => {
+        notification.style.display = "none"; // Esconde a notificação após 5 segundos
+    }, 5000);
+}
+
 
     $('#cliente_id').on('change', function () {
         const clienteId = $(this).val();

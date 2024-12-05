@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-/* menu do topo */
+/* Menu do topo */
 .custom-navbar { 
     background-color: whitesmoke !important;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Sombra leve */
@@ -39,6 +39,7 @@ body {
     animation: fadeIn 0.5s ease;
 }
 
+/* Animação de fade */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -64,51 +65,33 @@ body {
     text-align: center;
     font-size: 60px;
     font-weight: bold;
-    color:#fff;
+    color: #fff;
     text-shadow: 1px 1px 4px black;
+}
+
+.card-header-login {
     padding-top: 5%;
 }
 
-/* fundo parte de cima card cadastro */
-.card-header-register{
-    text-align: center;
-    font-size: 60px;
-    font-weight: bold;
-    color:#fff;
-    text-shadow: 1px 1px 4px black;
-}
-
-/* formulario tela login */
-.custom-card-body-login{
+/* Corpo do card */
+.custom-card-body-login, .custom-card-body-register {
     background-color: #ffa3af;
-    color:#fff;
+    color: #fff;
     font-family: "Poppins", sans-serif;
     font-weight: 300;
-    border-radius:20px;
+    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 150px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Sombra leve */
-    text-shadow: 1px 1px 4px black;     
-    margin-top: 1%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    text-shadow: 1px 1px 4px black;
     padding: 20px;
 }
 
-.custom-card-body-register{
-    background-color: #ffa3af;
-    color:#fff;
-    font-family: "Poppins", sans-serif;
-    font-weight: 300;
-    border-radius:20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.custom-card-body-register {
     margin: 80px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Sombra leve */
-    text-shadow: 1px 1px 4px black;  
     margin-top: 0.5%;
-    padding: 20px;
 }
 
 /* botoes menu */
@@ -125,17 +108,17 @@ body {
     font-size: 1rem; /* Tamanho do texto */
     transition: all 0.3s ease; /* Transição suave ao focar */
     font-family: "Poppins", sans-serif;
+    cursor: pointer;
+    padding: 5px 10px;
+    text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra leve */
-    max-width: 500px;
 }
 
 /* Link esqueceu sua senha */
 .btn-link {
-    font-size: 0.9rem; /* Tamanho menor */
-    color: #007bff; /* Azul */
-    text-decoration: underline; /* Sublinhado */
-    text-decoration-thickness: 1px;
-    text-shadow: none;
+    font-size: 0.9rem;
+    color: #007bff;
+    text-decoration: underline;
     font-family: "Poppins", sans-serif;
     text-align: center;
 }
