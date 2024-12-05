@@ -18,21 +18,38 @@ class ConsumoController extends Controller
     {
         // Validação dos dados recebidos via requisição
         $request->validate([
-        'cliente_id' => 'required|exists:clientes,id',
-        'crianca_id' => 'required|exists:criancas,id',
-        'servico_id' => 'required|array|min:1',
-        'servico_id.*' => 'exists:servicos,id',
+            'cliente_id' => 'required|exists:clientes,id',
+            'crianca_id' => 'required|exists:criancas,id',
+            'servico_id' => 'required|array|min:1',
+            'servico_id.*' => 'exists:servicos,id',
         ]);
+    
+        // Filtra apenas os consumos com status 'finalizado'
+        $consumos = Consumo::with(['servicos', 'cliente', 'crianca'])
+            ->where('status', 'finalizado')  // Adiciona a condição de filtro
+            ->get();
+    
+        $clientes = Cliente::all(); // Mantém os clientes para a view
+    
+        // Retorna para a view correta
+        return view('consumo.index', compact('consumos', 'clientes')); // Ajustado para usar a view de relatórios
+    }
 
-        $consumos = Consumo::with('servicos')->get();  // Carrega os consumos com seus serviços
-        $clientes = Cliente::all();  // Pega todos os clientes do banco
-        return view('home', compact('consumos', 'clientes'));  // Passa consumos e clientes para a view
+    public function relatorios()
+    {
+        // Obtém apenas os consumos com status 'finalizado'
+        $consumos = Consumo::with(['servicos', 'cliente', 'crianca'])
+            ->where('status', 'finalizado')
+            ->get();
+
+        // Retorna a view correta com os dados
+        return view('relatorios.index', compact('consumos'));
+
     }
     
+    
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create($cliente_id)
     {
         $cliente = Cliente::with('criancas')->find($cliente_id);  // Obtém o cliente com suas crianças
@@ -79,7 +96,6 @@ class ConsumoController extends Controller
             $consumo->save();
     
             return redirect()->route('consumo.index')->with('success', 'Comanda finalizada com sucesso!');
-            dd('Redirecionando para relatórios...');
         }
     
         return redirect()->route('home')->with('error', 'Comanda não encontrada.');

@@ -84,7 +84,7 @@
                 <div class="card-body d-flex justify-content-start gap-2">
                     <a href="{{ route('servicos.index') }}" class="btn btn-primary">Serviços</a>
                     <a href="{{ route('clientes.index') }}" class="btn btn-primary">Clientes</a>
-                    <a href="{{ route('consumo.index') }}" class="btn btn-primary">Relatórios</a>
+                    <a href="{{ route('relatorios.index') }}" class="btn btn-primary">Relatórios</a>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">+ Novo</button>
                 </div>
             </div>
