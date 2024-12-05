@@ -79,7 +79,7 @@
 
     <!-- Tabela de Consumos -->
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-10">
             <div class="card mb-3">
                 <div class="card-body d-flex justify-content-start gap-2">
                     <a href="{{ route('servicos.index') }}" class="btn btn-primary">Serviços</a>
@@ -94,13 +94,13 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Cliente</th>
-                                <th>Criança</th>
-                                <th>Hora Final</th>
-                                <th>Contador</th>
-                                <th>Total</th>
-                                <th>Ações</th>
-                                <th>Comanda</th>
+                            <th style="width: 15%;">Cliente</th>
+                            <th style="width: 20%;">Criança</th>
+                            <th style="width: 15%;">Hora Final</th>
+                            <th style="width: 5%;">Contador</th>
+                            <th style="width: 15%;">Total</th>
+                            <th style="width: 20%;">Ações</th>
+                            <th style="width: 10%;">Comanda</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -116,8 +116,8 @@
             <form action="{{ route('consumo.servico', ['consumo' => $consumo->id]) }}" method="POST">
                 @csrf
                 <div class="form-group">
-                    <select name="servico_id" id="servico_id" class="form-control w-50" onchange="atualizarValores()">
-                        <option value="">Escolha um serviço</option>
+                    <select name="servico_id" id="servico_id" class="form-control" onchange="atualizarValores()">
+                        <option value="">Serviço</option>
                         @foreach($servicos as $servico)
                             <option value="{{ $servico->id }}" data-tempo="{{ $servico->tempo }}" data-valor="{{ $servico->valor }}">
                                 {{ $servico->name }} - {{ $servico->tempo }} min - R$ {{ number_format($servico->valor, 2, ',', '.') }}
@@ -133,7 +133,7 @@
         <td>
 
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#servicosModal{{ $consumo->id }}">
-            Serviços
+            Detalhes
         </button>
         <form action="{{ route('consumo.finalizar', $consumo->id) }}" method="POST">
             @csrf
@@ -144,7 +144,7 @@
         @csrf
         @method('DELETE')
         <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta comanda?')">Excluir</button>
-        <a href="{{ route('recibo.pdf', ['id' => $consumo->id]) }}" class="btn btn-primary"  target="_blank">Resumo</a>  
+    <!-- <a href="{{ route('recibo.pdf', ['id' => $consumo->id]) }}" class="btn btn-primary"  target="_blank">Resumo</a>  -->        
     </form>
         </td>
     </tr>
