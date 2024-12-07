@@ -17,7 +17,7 @@ class Cliente extends Model
     public function criancas()
     {
         return $this->hasMany(Crianca::class);
-    }
+    }    
 
     public function consumos()
     {

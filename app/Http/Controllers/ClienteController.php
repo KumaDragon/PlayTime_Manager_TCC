@@ -8,15 +8,6 @@ use Illuminate\Http\Request;
 
 class ClienteController extends Controller
 {
-    public function showCriancas()
-    {
-        // Obter todas as crianças e seus clientes associados
-        $criancas = \App\Models\Crianca::with('cliente')->get();
-
-        // Retornar a view com as crianças e seus clientes
-        return view('clientes.show', compact('criancas'));
-    }
-
     public function index()
     {
         $clientes = Cliente::all();
@@ -28,78 +19,64 @@ class ClienteController extends Controller
         return view('clientes.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        // Remover formatação do telefone para validação
-        $telefone = preg_replace('/\D/', '', $request->input('telefone')); // Remove caracteres não numéricos
+        $telefone = preg_replace('/\D/', '', $request->input('telefone'));
+        $request->merge(['telefone' => $telefone]);
 
-        // Validação dos campos
-        $request->merge(['telefone' => $telefone]); // Substituir o telefone formatado pelo limpo para validação
         $request->validate([
-            'name' => 'required|string|max:255', // Nome é obrigatório, string e até 255 caracteres
-            'telefone' => 'required|string|size:11', // Telefone é obrigatório, string e exatamente 11 caracteres
+            'name' => 'required|string|max:255',
+            'telefone' => 'required|string|size:11',
         ]);
 
-        $cliente = new Cliente();
-        $cliente->name = $request->input('name');
-        $cliente->telefone = $telefone; // Salva o telefone sem formatação
-        $cliente->save();
-
-        return redirect()->route('clientes.crianca', ['cliente' => $cliente]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Cliente $cliente)
-    {
-        return view("clientes.edit", compact("cliente"));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Cliente $cliente)
-    {
-        // Remover formatação do telefone para validação
-        $telefone = preg_replace('/\D/', '', $request->input('telefone')); // Remove caracteres não numéricos
-
-        // Validação dos campos
-        $request->merge(['telefone' => $telefone]); // Substituir o telefone formatado pelo limpo para validação
-        $request->validate([
-            'name' => 'required|string|max:255', // Nome é obrigatório, string e até 255 caracteres
-            'telefone' => 'required|string|size:11', // Telefone é obrigatório, string e exatamente 11 caracteres
-        ]);
-
-        $cliente->update([
+        $cliente = Cliente::create([
             'name' => $request->input('name'),
             'telefone' => $telefone,
         ]);
 
-        return redirect()->route('clientes.index')->with('success', 'Cliente atualizado com sucesso!');
+        return redirect()->route('clientes.crianca', ['cliente' => $cliente]);
     }
+
+    public function edit(Cliente $cliente)
+    {
+        return view('clientes.edit', compact('cliente'));
+    }
+
+    public function update(Request $request, Cliente $cliente)
+    {
+        $telefone = preg_replace('/\D/', '', $request->input('telefone'));
+        $request->merge(['telefone' => $telefone]);
+    
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'telefone' => 'required|string|size:11',
+        ]);
+    
+        $cliente->update($request->only('name', 'telefone'));
+    
+        // Redireciona para a página de detalhes do cliente após atualização
+        return redirect()->route('clientes.crianca', $cliente->id)->with('success', 'Cliente atualizado com sucesso!');
+    }
+    
+    
 
     public function destroy($id)
     {
-        // Buscar o serviço pelo ID
         $cliente = Cliente::findOrFail($id);
 
-        // Verificar se o cliente está sendo utilizado em uma comanda (na tabela consumo_servico)
-        $isUsed = $cliente->consumos()->exists(); // Verifica se há registros relacionados
-
-        if ($isUsed) {
-            // Se o cliente está sendo utilizado, redireciona com uma mensagem de erro
+        if ($cliente->consumos()->exists()) {
             return redirect()->route('clientes.index')->with('error', 'Este cliente não pode ser excluído porque está sendo usado em uma comanda.');
         }
 
-        // Excluir o serviço se não estiver sendo utilizado
         $cliente->delete();
 
-        // Redirecionar com uma mensagem de sucesso
         return redirect()->route('clientes.index')->with('success', 'Cliente excluído com sucesso!');
+    }
+
+    public function showCriancas()
+    {
+        $criancas = \App\Models\Crianca::with('cliente')->get();
+        return view('clientes.show', compact('criancas'));
     }
 
     public function crianca(Cliente $cliente)
@@ -108,12 +85,27 @@ class ClienteController extends Controller
         return view('clientes.show', compact('cliente', 'servicos'));
     }
 
-    public function getCriancas(Cliente $cliente)
+    public function buscar(Request $request)
     {
-        // Carregar as crianças associadas ao cliente
-        $criancas = $cliente->criancas;
+        $query = $request->input('q');
+        return Cliente::where('name', 'like', "%$query%")->get(['id', 'name']);
+    }
 
-        // Retornar os dados como JSON
+    public function getCriancas($id)
+    {
+        try {
+            $criancas = Cliente::findOrFail($id)->criancas; // Supondo relação hasMany
+            return response()->json($criancas);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao buscar crianças'], 500);
+        }
+    }
+    
+
+    public function buscarCriancas($clienteId)
+    {
+        $criancas = Crianca::where('cliente_id', $clienteId)->get();
         return response()->json($criancas);
     }
+
 }

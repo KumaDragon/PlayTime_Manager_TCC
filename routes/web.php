@@ -1,49 +1,59 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ConsumoController;
 use App\Http\Controllers\ReciboController;
+use App\Http\Controllers\ServicoController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CriancaController;
 
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
+// Redirecionamento inicial
 Route::get('/', function () {
     return redirect(url('/home'));
 });
 
+// Autenticação
 Auth::routes();
 
-Route::get('/welcome', function () {return view('welcome');})->name('welcome');
+// Rotas públicas
+Route::get('/welcome', fn () => view('welcome'))->name('welcome');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/clientes/criancas', [App\Http\Controllers\ClienteController::class, 'showCriancas'])->name('clientes.show');
-Route::get('/relatorios', [ConsumoController::class, 'index'])->name('relatorios.index');
-Route::get('/pagamento/{consumo}', [ConsumoController::class, 'pagamento'])->name('consumo.pagamento');
-Route::get('/pagamento/{id}', [ConsumoController::class, 'show'])->name('pagamento.show');
-Route::post('/pagamento/{id}/confirmar', [ConsumoController::class, 'confirmarPagamento'])->name('pagamento.confirmar');
+
+// Clientes
+Route::get('/clientes/criancas', [ClienteController::class, 'showCriancas'])->name('clientes.showCriancas');
+Route::get('/clientes/crianca/{cliente}', [ClienteController::class, 'crianca'])->name('clientes.crianca');
+Route::get('/clientes/{id}/criancas', [ClienteController::class, 'getCriancas'])->name('clientes.getCriancas');
+Route::get('/clientes/buscar', [ClienteController::class, 'buscar'])->name('clientes.buscar');
+Route::resource('/clientes', ClienteController::class);
+
+// Criancas
+Route::resource('/criancas', CriancaController::class);
+// Rota para editar a criança
+Route::get('/clientes/{cliente}/criancas/{crianca}/edit', [CriancaController::class, 'edit'])->name('criancas.edit');
+
+// Rota para atualizar a criança
+Route::put('/clientes/{cliente}/criancas/{crianca}', [CriancaController::class, 'update'])->name('criancas.update');
+
+// Serviços
+Route::resource('/servicos', ServicoController::class);
+
+// Consumo
+Route::resource('/consumo', ConsumoController::class);
+Route::post('consumo/{consumo}/adicionar-tempo', [ConsumoController::class, 'adicionarTempo'])->name('consumo.adicionarTempo');
+Route::post('consumo/{consumo}/servico', [ConsumoController::class, 'servico'])->name('consumo.servico');
 Route::put('consumo/{id}/finalizar', [ConsumoController::class, 'finalizar'])->name('consumo.finalizar');
-Route::resource('/servicos', \App\Http\Controllers\ServicoController::class);
-Route::resource('/clientes', \App\Http\Controllers\ClienteController::class);
-Route::resource('/criancas', \App\Http\Controllers\CriancaController::class);
-Route::resource('/consumo', \App\Http\Controllers\ConsumoController::class);
-Route::resource('users', \App\Http\Controllers\UserController::class);
+Route::get('/consumo/{consumo}', [ConsumoController::class, 'show'])->name('consumo.show');
 
+// Pagamentos
+Route::get('/pagamento/{consumo}', [ConsumoController::class, 'pagamento'])->name('consumo.pagamento');
+Route::post('/pagamento/{id}/confirmar', [ConsumoController::class, 'confirmarPagamento'])->name('pagamento.confirmar');
 
-Route::post('consumo/{consumo}/servico/{servico}', [ConsumoController::class, 'servico'])->name('consumo.servico');
+// Relatórios
+Route::get('/relatorios', [ConsumoController::class, 'index'])->name('relatorios.index');
 
-Route::get('/clientes/crianca/{cliente}', [\App\Http\Controllers\ClienteController::class, 'crianca'])->name('clientes.crianca');
-Route::get('/clientes/{cliente}/criancas', [\App\Http\Controllers\ClienteController::class, 'getCriancas'])->name('clientes.getCriancas');
-Route::post('/consumo/{consumo}/adicionar-tempo', [ConsumoController::class, 'adicionarTempo']);
-Route::get('consumo/{consumo}', [ConsumoController::class, 'show'])->name('consumo.show');
+// Recibos
+Route::get('/recibo/pdf/{id}', [ReciboController::class, 'gerarReciboPDF'])->name('recibo.pdf');
 
-Route::post('/consumo/{consumo}/servico', [ConsumoController::class, 'servico'])->name('consumo.servico');
-
-Route::get('/recibo/pdf/{id}', [App\Http\Controllers\ReciboController::class, 'gerarReciboPDF'])->name('recibo.pdf');
+// Usuários
+Route::resource('users', UserController::class);

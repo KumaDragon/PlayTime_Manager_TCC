@@ -51,20 +51,16 @@
                     <form action="{{ route('consumo.store') }}" method="post">
                         @csrf
                         <div class="form-group mb-3">
-                            <label for="cliente_id">Cliente</label>
-                            <select name="cliente_id" id="cliente_id" class="form-control">
-                                <option value="">Selecione um cliente</option>
-                                @foreach($clientes as $cliente)
-                                    <option value="{{ $cliente->id }}">{{ $cliente->name }}</option>
-                                @endforeach
-                            </select>
+                            <label for="buscar_cliente">Buscar Cliente</label>
+                            <input type="text" id="buscar_cliente" class="form-control" placeholder="Digite o nome do cliente" autocomplete="off">
+                            <input type="hidden" name="cliente_id" id="cliente_id">
+                            <div id="resultado_busca_cliente" class="list-group mt-2"></div>
                         </div>
 
-                        <div class="form-group mb-3">
-                            <label for="crianca_id">Criança</label>
-                            <select name="crianca_id" id="crianca_id" class="form-control">
-                                <option value="">Selecione uma criança</option>
-                            </select>
+                        <div class="form-group mb-3" id="criancas_container" style="display: none;">
+                            <label>Crianças</label>
+                            <div id="botoes_criancas"></div>
+                            <input type="hidden" name="crianca_id" id="crianca_id">
                         </div>
 
                         <div class="form-group mb-3">
@@ -249,23 +245,82 @@ function showNotification(message) {
 }
 
 
-    $('#cliente_id').on('change', function () {
-        const clienteId = $(this).val();
-        if (clienteId) {
+$(document).ready(function () {
+    // Autocomplete de clientes
+    $('#buscar_cliente').on('input', function () {
+        const query = $(this).val();
+        if (query.length > 2) {
             $.ajax({
-                url: `/clientes/${clienteId}/criancas`,
+                url: `/clientes/buscar`,
                 type: 'GET',
+                data: { q: query },
                 success: function (data) {
-                    const $crianca = $('#crianca_id').empty().append('<option value="">Selecione uma criança</option>');
-                    data.forEach(crianca => $crianca.append(`<option value="${crianca.id}">${crianca.name}</option>`));
+                    const $resultado = $('#resultado_busca_cliente').empty();
+                    data.forEach(cliente => {
+                        $resultado.append(`
+                        <a href="#" 
+                            class="list-group-item list-group-item-action list-group-item-secondary" 
+                            data-id="${cliente.id}" 
+                            data-name="${cliente.name}">
+                                ${cliente.name}
+                            </a>
+                        `);
+                    });
                 },
                 error: function () {
-                    alert('Erro ao carregar as crianças!');
+                    alert('Erro ao buscar clientes!');
                 }
             });
         } else {
-            $('#crianca_id').empty().append('<option value="">Selecione um cliente primeiro</option>');
+            $('#resultado_busca_cliente').empty();
         }
     });
+
+    // Selecionar cliente e buscar crianças
+    $('#resultado_busca_cliente').on('click', '.list-group-item', function (e) {
+        e.preventDefault();
+        const clienteId = $(this).data('id');
+        const clienteName = $(this).data('name');
+
+        $('#buscar_cliente').val(clienteName);
+        $('#cliente_id').val(clienteId);
+        $('#resultado_busca_cliente').empty();
+
+        // Buscar crianças
+        $.ajax({
+            url: `/clientes/${clienteId}/criancas`,
+            success: function (data) {
+    console.log(data);
+    const $botoesCriancas = $('#botoes_criancas').empty();
+    if (data.length > 0) {
+        data.forEach(crianca => {
+            $botoesCriancas.append(`
+                <button type="button" class="btn btn-outline-primary me-2 crianca-botao" 
+                        data-id="${crianca.id}">
+                    ${crianca.name}
+                </button>
+            `);
+        });
+        $('#criancas_container').show();
+    } else {
+        $('#criancas_container').hide();
+        alert('Nenhuma criança cadastrada para este cliente.');
+    }
+},
+
+            error: function () {
+                alert('Erro ao carregar as crianças!');
+            }
+        });
+    });
+
+    // Selecionar criança
+    $('#botoes_criancas').on('click', '.crianca-botao', function () {
+        const criancaId = $(this).data('id');
+        $('#crianca_id').val(criancaId);
+        $('.crianca-botao').removeClass('btn-primary').addClass('btn-outline-primary');
+        $(this).removeClass('btn-outline-primary').addClass('btn-primary');
+    });
+});
 </script>
 @endsection

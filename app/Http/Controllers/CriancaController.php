@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Crianca;
+use App\Models\Cliente;
 use Illuminate\Http\Request;
 
 class CriancaController extends Controller
@@ -50,28 +51,46 @@ class CriancaController extends Controller
     {
         //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Crianca $crianca)
+    public function edit($clienteId, $criancaId)
     {
-        //
+        // Buscar o cliente e a criança
+        $cliente = Cliente::findOrFail($clienteId);
+        $crianca = $cliente->criancas()->findOrFail($criancaId);
+    
+        // Retornar a view de edição com os dados da criança
+        return view('clientes.crianca.edit', compact('cliente', 'crianca'));
     }
-
+    
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Crianca $crianca)
+    public function update(Request $request, $clienteId, $criancaId)
     {
-        //
+        // Validar os dados
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'nascimento' => 'required|date',
+        ]);
+    
+        // Encontrar o cliente e a criança
+        $cliente = Cliente::findOrFail($clienteId);
+        $crianca = $cliente->criancas()->findOrFail($criancaId);
+    
+        // Atualizar a criança
+        $crianca->update($request->only('name', 'nascimento'));
+    
+        // Redirecionar para a página de índice de clientes
+        return redirect()->route('clientes.index')->with('success', 'Criança atualizada com sucesso!');
     }
-
+    
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Crianca $crianca)
     {
-        //
+        $crianca->delete();
+    
+        return redirect()->route('clientes.index')->with('success', 'Criança excluída com sucesso!');
     }
+    
 }
