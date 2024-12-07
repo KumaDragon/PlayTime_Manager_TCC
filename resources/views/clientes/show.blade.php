@@ -43,7 +43,6 @@
                         </form>
                     </div>
 
-                    <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
                     </div>
@@ -55,7 +54,6 @@
             <div class="modal-dialog">
                 <div class="modal-content">
 
-                    <!-- Modal Header -->
                     <div class="modal-header">
                         <h4 class="modal-title">Abrir Comanda</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>

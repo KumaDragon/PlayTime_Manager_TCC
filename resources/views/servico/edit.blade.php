@@ -9,7 +9,7 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <span>Editar Serviço</span>
 
-                <a href="{{route('servicos.index')}}" class="btn btn-info">Voltar</a>
+                <a href="{{route('servicos.index')}}" class="btn btn-primary">Voltar</a>
             </div>
 
             <div class="card-body">

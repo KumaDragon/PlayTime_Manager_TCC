@@ -95,17 +95,26 @@
         <!-- Mensagens de sucesso e erro -->
         <div class="container mt-4">
             @if (session('error'))
-                <div class="alert alert-danger">
-                    {{ session('error') }}
-                </div>
+        <div id="error-notification" class="alert alert-danger">
+            {{ session('error') }}
+        </div>
             @endif
 
             @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
+        <div id="success-notification" class="alert alert-success">
+            {{ session('success') }}
+        </div>
             @endif
-        </div>        
+        </div>
+
+        <script>
+        setTimeout(() => {
+            const errorNotification = document.getElementById('error-notification');
+            const successNotification = document.getElementById('success-notification');
+            if (errorNotification) errorNotification.style.display = 'none';
+            if (successNotification) successNotification.style.display = 'none';
+        }, 5000);
+        </script>
 
         <!-- Main Content -->
         <main class="py-4">
@@ -113,10 +122,8 @@
         </main>
     </div>
 
-    <!-- Extra JS -->
     @yield('js')
-    <!--     <footer class="text-center mt-5 mb-3">
-    <small>PlayTime Manager v1.0 - 2024</small> -->
+
 </footer>
 
 </body>

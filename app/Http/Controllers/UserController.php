@@ -38,10 +38,12 @@ class UserController extends Controller
         // Validação dos dados
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'cpf' => ['required', 'string', 'cpf'],  // Usando o validador cpf que você registrou no AppServiceProvider
-            'telefone' => 'required|string|max:15', // Validação de telefone
-            'password' => 'required|string|min:8|confirmed', // Confirmação de senha
+            'email' => 'required|email|max:255|unique:users,email,' . $id,
+            'cpf' => 'required|cpf', // Validador cpf
+            'telefone' => 'required|string|max:15',
+        ], [
+            'cpf.required' => 'O campo CPF é obrigatório.',
+            'cpf.cpf' => 'O CPF informado é inválido.', // Mensagem personalizada para CPF inválido
         ]);
     
         // Criação do usuário
@@ -83,9 +85,12 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $id, // Garantir que o email não será duplicado
-            'cpf' => 'required|cpf',
+            'email' => 'required|email|max:255|unique:users,email,' . $id,
+            'cpf' => 'required|cpf', // Validador cpf
             'telefone' => 'required|string|max:15',
+        ], [
+            'cpf.required' => 'O campo CPF é obrigatório.',
+            'cpf.cpf' => 'O CPF informado é inválido.', // Mensagem personalizada para CPF inválido
         ]);
     
         $user = User::findOrFail($id);  // Encontra o usuário
@@ -106,14 +111,26 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        // Encontrar o usuário pelo ID
-        $user = User::findOrFail($id);
+        try {
+            // Encontrar o usuário pelo ID
+            $user = User::findOrFail($id);
     
-        // Excluir o usuário
-        $user->delete();
+            // Excluir o usuário
+            $user->delete();
     
-        // Redirecionar para a lista de usuários com uma mensagem de sucesso
-        return redirect()->route('users.index')->with('success', 'Usuário excluído com sucesso!');
+            // Redirecionar para a lista de usuários com uma mensagem de sucesso
+            return redirect()->route('users.index')->with('success', 'Usuário excluído com sucesso!');
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Verifica se o erro é de violação de chave estrangeira
+            if ($e->getCode() == '23000') {
+                // Retorna para a lista de usuários com uma mensagem de erro específica
+                return redirect()->route('users.index')->with('error', 'Não é possível excluir o usuário, pois ele possui registros associados a comandas.');
+            }
+    
+            // Em caso de outro tipo de erro, lança a exceção original
+            throw $e;
+        }
     }
+    
     
 }
