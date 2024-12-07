@@ -100,16 +100,15 @@
         </div>
 
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span>Crianças cadastradas de {{ $cliente->name }}</span>
-
+                    <span>Crianças de {{ $cliente->name }}</span>
+                    <div class="d-flex gap-2">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">+ Novo</button>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#novaComanda">Abrir comanda</button>
-                        <a href="{{route('clientes.create')}}" class="btn btn-primary">Voltar</a>
+                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#novaComanda">Abrir comanda</button>
                     </div>
-
+                    </div>
                     <div class="card-body">
                         <table class="table table-striped">
                             <thead>
@@ -127,7 +126,14 @@
                                         <td>{{ $crianca->nascimento->format('d-m-Y') }}</td>
                                         <td>{{ $crianca->nascimento->diffInYears() }} anos</td>
                                         <td>
-                                            <button>Editar</button>
+                                        <td>
+                                        <a href="{{ route('criancas.edit', ['cliente' => $cliente->id, 'crianca' => $crianca->id]) }}" class="btn btn-primary">Editar</a>
+                                        <form action="{{ route('criancas.destroy', ['crianca' => $crianca->id]) }}" method="POST" style="display: inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta criança?')">Excluir</button>
+                                        </form>
+                                        </td>
                                         </td>
                                     </tr>
                                 @empty
@@ -142,4 +148,31 @@
             </div>
         </div>
     </div>
+@endsection
+@section('js')
+<script>
+    function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.className = 'alert alert-success position-fixed top-0 end-0 m-3';
+    notification.style.zIndex = 1050;
+    notification.style.animation = 'fadeOut 5s forwards';
+    notification.textContent = message;
+
+    document.body.appendChild(notification);
+
+    // Remove a notificação do DOM após 5 segundos
+    setTimeout(() => {
+        notification.remove();
+    }, 5000);
+}
+
+// Exemplo de uso
+document.addEventListener('DOMContentLoaded', function () {
+    const successMessage = "{{ session('success') }}";
+    if (successMessage) {
+        showNotification(successMessage);
+    }
+});
+
+    </script>
 @endsection

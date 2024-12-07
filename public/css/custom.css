@@ -92,6 +92,19 @@ body {
 }
 
 
+.list-group-item-action {
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    border-radius: 5px; /* Adiciona cantos arredondados */
+    border: 1px solid #dcdcdc; /* Bordas mais suaves */
+}
+
+.list-group-item-action:hover {
+    background-color: #e9ecef; /* Cor de hover mais clara */
+    color: #495057; /* Um tom cinza escuro */
+    text-decoration: none; /* Remove sublinhado */
+}
+
+
 .custom-card-body-register {
     margin: 80px;
     margin-top: 0.5%;
