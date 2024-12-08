@@ -3,18 +3,15 @@
 @section('content')
 
     <div class="row justify-content-center">
-        <div class="col-md-8">
+    <div class="col-lg-10 col-md-10 col-sm-8">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span>Serviços</span>
-
                     <div class="d-flex gap-2">
                     <a href="{{ route('servicos.create') }}" class="btn btn-secondary">+ Novo</a>
                     <a href="{{ route('home') }}" class="btn btn-primary">Voltar</a>
                     </div>
-
                 </div>
-
                 <div class="card-body-service">
                     <table class="table table-striped">
                         <thead>
@@ -26,9 +23,7 @@
                             </tr>
                         </thead>
                         <tbody>
-
                         @forelse($servicos as $servico)
-
                             <tr>
                                 <td>{{ $servico->name }}</td>
                                 <td>R$ {{ number_format($servico->valor, 2, ',', '.') }}</td>
