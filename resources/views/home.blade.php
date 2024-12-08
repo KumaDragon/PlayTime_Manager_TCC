@@ -4,12 +4,11 @@
 
 <div class="row justify-content-center">
     <div class="col-lg-10 col-md-10 col-sm-8">
-        <div class="card">
+        <div class="card border-gray">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <span>Comandas</span>
                 <div class="d-flex gap-2">
                     <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#myModal">Nova Comanda</button>
-                    <a href="{{ route('home') }}" class="btn btn-primary">Voltar</a>
                 </div>
             </div>
         </div>
@@ -83,7 +82,7 @@
         </div>
         <!-- Tabela de Consumos -->
         <div class="card-body-service">
-            <table class="table table-striped">
+            <table class="table table-striped border-gray">
                 <thead>
                     <tr>
                         <th style="width: 20%;">Cliente</th>
@@ -303,8 +302,8 @@ document.addEventListener("DOMContentLoaded", function () {
         .addClass('btn-primary'); // Restaura a classe padrão
     
     $(this)
-        .removeClass('btn-primary') // Remove a classe padrão
-        .addClass('btn-secondary'); // Adiciona a classe de destaque para o botão clicado
+        .removeClass('btn-primary')
+        .addClass('btn-secondary');
 });
 });
 </script>
