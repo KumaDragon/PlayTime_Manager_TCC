@@ -116,6 +116,11 @@ body {
     color: #fbaf00 !important;
 }
 
+#botoes_criancas {
+    outline: none; /* Remove a borda azul ao focar */
+}
+
+
 /* Espaco email e senha */
 .form-control {
     border:none;
