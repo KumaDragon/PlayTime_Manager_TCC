@@ -24,7 +24,7 @@
 
                         <form method="POST" action="{{ route('users.store') }}">
                             @csrf
-                            <a href="{{ route('users.index') }}" class="btn btn-info">Voltar</a>
+                            <a href="{{ route('users.index') }}" class="btn btn-primary">Voltar</a>
                             
                             <div class="form-group mt-3">
                                 <label for="name">Nome</label>

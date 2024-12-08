@@ -92,7 +92,12 @@
                     <div class="form-group mt-3 row justify-content-center">
                         <button type="submit" class="btn btn-success" style="width: 250px">
                             {{ __('Cadastrar') }}
+                            
                         </button>
+                        
+                    </div>
+                    <div class="d-flex">
+                        <a href="{{ route('login') }}" class="btn btn-primary ms-auto">Voltar</a>
                     </div>
                 </form>
             </div>
