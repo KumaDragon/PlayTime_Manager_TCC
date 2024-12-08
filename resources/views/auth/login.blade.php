@@ -4,7 +4,7 @@
 <!-- div login -->
 <div class="container-fluid custom-container-login">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-lg-10 col-md-10 col-sm-8">
             
                 <div class="card-header-login">{{ __('LOGIN') }}</div>
 

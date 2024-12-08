@@ -3,7 +3,7 @@
 @section('content')
 <div class="container custom-container-register">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+            <div class="col-lg-10 col-md-10 col-sm-8">
             <div class="custom-card-body-register">
                 <div class="card-header text-center">
                     {{ __('CADASTRE-SE') }}
