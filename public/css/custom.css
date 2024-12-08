@@ -193,6 +193,11 @@ body {
     font-weight: bold;
     color:#fbaf00;
     text-shadow: 1px 1px 1px #000000bb;
+    width: 100%; /* Garantir que o card-header ocupe toda a largura */
+    padding: 15px; /* Ajuste o padding conforme necessário */
+    display: block;
+    justify-content: space-between; /* Distribui os itens para ocupar toda a largura */
+    align-items: center; /* Alinha os itens verticalmente */
 }
 
 .card-body{
@@ -257,63 +262,57 @@ body {
     text-align: center;
 }
 
+.col-md-8 {
+    max-width: 65%; /* Define um máximo de 65% da largura da tela */
+    width: 65%; /* Define a largura para 65% */
+}
+
+.card-header {
+    width: 100%; /* A largura ocupará 100% do seu contêiner pai */
+}
+
 /* Tabela responsiva */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
 .table-striped {
     width: 100%;
     max-width: 100%;
-    margin: 0 auto;
+    margin: 0; /* Remove as margens externas da tabela */
+    padding: 0; /* Remove qualquer padding externo */
     border-collapse: collapse;
     font-size: 1rem;
+    background-color: transparent; /* Garante que não tenha fundo adicional */
 }
 
+/* Ajuste para as células da tabela */
 .table-striped th, .table-striped td {
-    padding: 12px;
     text-align: left;
     width: auto;
     word-wrap: break-word;
+    padding-left: 10px; /* Ajusta o padding para os conteúdos */
+    padding-right: 10px; /* Ajusta o padding para os conteúdos */
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 
-.btn-primary, .btn-secondary, .btn-info, .btn-success, .btn-danger {
-    font-size: 16px; /* Definindo o mesmo tamanho de fonte */
+/* Ajuste para as linhas alternadas */
+.table-striped tbody tr:nth-child(odd) {
+    background-color: transparent; /* Remove a cor de fundo das linhas alternadas */
 }
 
-@media (max-width: 1200px) {
-    .custom-navbar {
-        margin-left: 50px;
-        margin-right: 50px;
-    }
-
-    .table-striped {
-        font-size: 0.9rem;
-    }
-
-    .table-striped th, .table-striped td {
-        padding: 10px;
-    }
-}
-
+/* Melhorando a responsividade */
 @media (max-width: 768px) {
     .table-striped {
-        font-size: 0.85rem;
+        margin: 0 10px; /* Diminui a margem lateral em telas pequenas */
     }
-
     .table-striped th, .table-striped td {
-        padding: 8px;
+        padding-left: 5px; /* Reduz ainda mais o padding em telas pequenas */
+        padding-right: 5px; /* Reduz ainda mais o padding em telas pequenas */
     }
 }
 
-@media (max-width: 480px) {
-    .table-striped {
-        font-size: 0.75rem;
-    }
-
-    .table-striped th, .table-striped td {
-        padding: 6px;
-    }
-
-    .custom-navbar {
-        font-size: 0.8rem;
-    }
 
 
-}
