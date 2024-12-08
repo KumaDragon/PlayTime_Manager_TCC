@@ -9,7 +9,7 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <span>Editar Usuário</span>
 
-                <a href="{{route('users.index')}}" class="btn btn-info">Voltar</a>
+                <a href="{{route('users.index')}}" class="btn btn-primary">Voltar</a>
             </div>
 
             <div class="card-body">
@@ -29,8 +29,11 @@
                     </div>
 
                     <div class="form-group mt-3">
-                        <label for="cpf">CPF</label>
-                        <input type="text" id="cpf" name="cpf" value="{{$user->cpf}}" class="form-control" required>
+                    <label for="cpf">CPF</label>
+                    <input type="text" id="cpf" name="cpf" value="{{ old('cpf', $user->cpf) }}" class="form-control" required>
+                    @error('cpf')
+                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                    @enderror
                     </div>
 
                     <div class="form-group mt-3">

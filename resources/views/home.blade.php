@@ -295,10 +295,10 @@ $(document).ready(function () {
     if (data.length > 0) {
         data.forEach(crianca => {
             $botoesCriancas.append(`
-                <button type="button" class="btn btn-outline-primary me-2 crianca-botao" 
-                        data-id="${crianca.id}">
-                    ${crianca.name}
-                </button>
+                    <div class="btn btn-primary me-2 crianca-botao" 
+                         data-id="${crianca.id}">
+                        ${crianca.name}
+                    </div>
             `);
         });
         $('#criancas_container').show();
