@@ -186,12 +186,14 @@ document.addEventListener("DOMContentLoaded", function () {
     @endforeach
 });
 
-    function updateCountdown(endTime, elementId, clienteName, criancaName) {
-        const interval = setInterval(() => {
-            const now = new Date().getTime();
-            const distance = endTime - now;
+function updateCountdown(endTime, elementId, clienteName, criancaName) {
+    let notified = false; // Variável de notificação específica para cada comanda
 
-            if (distance <= 0) {
+    const interval = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = endTime - now;
+
+        if (distance <= 0) {
             document.getElementById(elementId).textContent = "00:00:00";
             clearInterval(interval); // Para o contador
             return; // Não faça mais nada
@@ -204,24 +206,10 @@ document.addEventListener("DOMContentLoaded", function () {
         // Atualizar o contador na tela
         document.getElementById(elementId).textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
-        // Verificar se o contador chegou a 30 segundos e mostrar a notificação
-        if (seconds === 30 && !notified) {
-            showNotification(`O tempo de ${clienteName} para a criança ${criancaName} está finalizando em 30 segundos!`);
-            notified = true; // Garantir que a notificação seja exibida apenas uma vez
-        }
-    }, 1000);
+        // Verificar se faltam 1 minuto e mostrar a notificação
+
+    });
 }
-
-    function showNotification(message) {
-        const notification = document.getElementById("notification");
-        notification.textContent = message;
-        notification.style.display = "block"; // Exibe a notificação
-
-        setTimeout(() => {
-            notification.style.display = "none"; // Esconde a notificação após 5 segundos
-        }, 5000);
-    }
-
 
     $(document).ready(function () {
         // Autocomplete de clientes
