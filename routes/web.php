@@ -44,6 +44,8 @@ Route::post('consumo/{consumo}/adicionar-tempo', [ConsumoController::class, 'adi
 Route::post('consumo/{consumo}/servico', [ConsumoController::class, 'servico'])->name('consumo.servico');
 Route::put('consumo/{id}/finalizar', [ConsumoController::class, 'finalizar'])->name('consumo.finalizar');
 Route::get('/consumo/{consumo}', [ConsumoController::class, 'show'])->name('consumo.show');
+Route::get('/check-consumos', [ConsumoController::class, 'checkTimeAndNotify']);
+
 
 // Pagamentos
 Route::get('/pagamento/{consumo}', [ConsumoController::class, 'pagamento'])->name('consumo.pagamento');
