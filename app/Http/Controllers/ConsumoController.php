@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Consumo;
 use App\Models\Crianca;
 use App\Models\Cliente;
@@ -233,5 +234,32 @@ public function pagamento(Consumo $consumo)
         // Retorna à página inicial com sucesso
         return redirect()->route('home')->with('consumo', $consumo)->with('success', 'Serviço adicionado com sucesso!');
     }
+
+    public function checkTimeAndNotify()
+    {
+        $consumos = Consumo::where('notified', false)->get();
     
+        foreach ($consumos as $consumo) {
+            $endTime = strtotime($consumo->created_at) + ($consumo->tempo_total * 60);
+            $currentTime = time();
+            $timeRemaining = $endTime - $currentTime;
+            $cliente = $consumo->cliente->nome;  // Substitua com a variável real
+            $crianca = $consumo->crianca->nome;  // Substitua com a variável real
+            $horaFinal = now()->addMinutes($timeRemaining)->format('H:i'); // Horário final, se necessário
+    
+            if ($timeRemaining <= 60 && $timeRemaining > 0) {
+                return redirect()->route('home')->with('warning', "Tempo acabando");
+            }
+    
+            if ($timeRemaining <= 0) {
+                return redirect()->route('home')->with('danger', "Tempo acabou");
+    
+                // Marca como notificado para evitar múltiplas notificações
+                $consumo->notified = true;
+                $consumo->save();
+            }
+        }
+    }
+    
+
 }

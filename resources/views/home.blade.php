@@ -119,9 +119,9 @@
                                 </form>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#servicosModal{{ $consumo->id }}">
-                                    Detalhes
-                                </button>
+                            <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#servicosModal{{ $consumo->id }}">
+    Detalhes
+</button>
 
                                 <form action="{{ route('consumo.pagamento', $consumo->id) }}" method="GET" class="d-grid gap-2 mt-2">
                                     <button class="btn btn-success w-100">Pagamento</button>
@@ -139,13 +139,6 @@
                             <td colspan="7" class="text-center">Nenhuma comanda encontrada.</td>
                         </tr>
                     @endforelse
-
-                    @if(session('success'))
-                        <div id="successMessage" class="alert alert-success position-fixed top-0 end-0 m-3" style="z-index: 1050; animation: fadeOut 5s forwards;">
-                            {{ session('success') }}
-                        </div>
-                        {{ session()->forget('success') }}
-                    @endif
                 </tbody>
             </table>
         </div>
@@ -157,7 +150,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="servicosModalLabel{{ $consumo->id }}">Serviços do Consumo #{{ $consumo->id }}</h5>
+                    <h5 class="modal-title" id="servicosModalLabel{{ $consumo->id }}">Serviços da Comanda #{{ $consumo->id }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -167,8 +160,11 @@
                         @endforeach
                     </ul>
                 </div>
+                <div class="modal-footer">
+                </div>
             </div>
         </div>
+    </div>
 @endforeach
 @endsection
 @section('js')
@@ -181,19 +177,40 @@ document.addEventListener("DOMContentLoaded", function () {
             new Date("{{ $consumo->created_at->addMinutes($consumo->totalTempo())->toDateTimeString() }}"),
             "countdown_{{ $consumo->id }}",
             "{{ optional($consumo->cliente)->name }}",
-            "{{ optional($consumo->crianca)->name }}"
+            "{{ optional($consumo->crianca)->name }}",
+            {{ $consumo->id }}
         );
     @endforeach
+
+    // Adicionar event listeners para os botões de "Detalhes"
+    const buttons = document.querySelectorAll('[data-bs-toggle="modal"]');
+    buttons.forEach(button => {
+        button.addEventListener('click', function() {
+            const consumoId = this.getAttribute('data-bs-target').replace('#servicosModal', '');
+            console.log('Abrindo modal para o consumo', consumoId);
+            // Você pode adicionar código aqui para customizar o comportamento do modal, se necessário.
+        });
+    });
 });
 
-    function updateCountdown(endTime, elementId, clienteName, criancaName) {
-        const interval = setInterval(() => {
-            const now = new Date().getTime();
-            const distance = endTime - now;
 
-            if (distance <= 0) {
+function updateCountdown(endTime, elementId, clienteName, criancaName, consumoId) {
+    let notified1Min = false;  // Variável para notificação de 1 minuto
+    let notifiedEnd = false;   // Variável para notificação de fim de tempo
+
+    const interval = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = endTime - now;
+
+        if (distance <= 0) {
             document.getElementById(elementId).textContent = "00:00:00";
             clearInterval(interval); // Para o contador
+
+            if (!notifiedEnd) {
+                sendNotification(consumoId, `ATENÇÃO: O tempo da comanda de ${clienteName} e ${criancaName} acabou!`, 'danger');
+                notifiedEnd = true; // Evita múltiplas notificações de fim
+            }
+
             return; // Não faça mais nada
         }
 
@@ -203,25 +220,41 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Atualizar o contador na tela
         document.getElementById(elementId).textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
-        // Verificar se o contador chegou a 30 segundos e mostrar a notificação
-        if (seconds === 30 && !notified) {
-            showNotification(`O tempo de ${clienteName} para a criança ${criancaName} está finalizando em 30 segundos!`);
-            notified = true; // Garantir que a notificação seja exibida apenas uma vez
-        }
-    }, 1000);
+    }); // Atualiza a cada segundo
 }
 
-    function showNotification(message) {
-        const notification = document.getElementById("notification");
-        notification.textContent = message;
-        notification.style.display = "block"; // Exibe a notificação
+function sendNotification(consumoId, message, type) {
+    // Cria a notificação
+    const notification = document.createElement('div');
+    notification.id = 'notification';
+    
+    // Adiciona a classe de estilo de acordo com o tipo
+    notification.classList.add(type); // 'danger', 'warning', etc.
+    
+    // Cria o botão de fechar
+    const closeButton = document.createElement('button');
+    closeButton.textContent = '×';
+    closeButton.onclick = function() {
+        notification.style.display = 'none'; // Fecha a notificação
+    };
+    
+    // Adiciona a mensagem e o botão de fechar
+    notification.innerHTML = `${message}`;
+    notification.appendChild(closeButton);
+    
+    // Adiciona a notificação ao corpo da página
+    document.body.appendChild(notification);
+    
+    // Exibe a notificação
+    notification.style.display = 'flex'; // Mostra a notificação
+}
 
-        setTimeout(() => {
-            notification.style.display = "none"; // Esconde a notificação após 5 segundos
-        }, 5000);
-    }
 
+//function sendNotification(consumoId, message, type) {
+    // Função para enviar a notificação, pode ser adaptada para seu backend ou frontend
+   // alert(`${message}`); // Exemplo usando alert
+    // Você pode substituir a função alert por algo mais sofisticado, como um sistema de notificação no frontend.
+//}
 
     $(document).ready(function () {
         // Autocomplete de clientes

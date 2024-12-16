@@ -30,13 +30,43 @@ body {
     width: 100vw; /* Garante que a largura ocupe toda a tela */
 }
 
-
 #notification {
     width: 90%;
     max-width: 400px;
     text-align: center;
     font-weight: bold;
     animation: fadeIn 0.5s ease;
+    padding: 10px;
+    margin: 10px auto;
+    border-radius: 5px;
+    position: fixed; /* Fixa no canto da tela */
+    top: 10px; /* Distância do topo */
+    right: 10px; /* Distância da direita */
+    z-index: 9999; /* Garante que fique sobre outros elementos */
+    display: none; /* Inicialmente invisível */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+
+}
+
+#notification button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#notification.danger {
+    background-color: rgb(216, 89, 89);
+    color: white;
+}
+
+#notification.warning {
+    background-color: orange;
+    color: white;
 }
 
 /* Animação de fade */
@@ -55,6 +85,7 @@ body {
     0% { opacity: 1; }
     100% { opacity: 0; visibility: hidden; }
 }
+
 
 /* fundo tela login */
 
@@ -224,21 +255,29 @@ body {
 }
 
 /* card adicionar serviços */
-.modal-body{
+.modal-body {
     background-color: #03CEA4;
     color: #fff;
     font-family: "Poppins", sans-serif;
 }
 
-.modal-header{
+.modal-header {
     color: #fff;
     font-family: "Poppins", sans-serif;
     font-size: 20px;
 }
 
-.modal-content{
+.modal-content {
     background-color: #03CEA4;
-    border-radius: 20px;
+    border-radius: 20px;  /* Arredonda os cantos do conteúdo do modal */
+}
+
+.modal-footer {
+    color: #fff;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    border-top: 1px solid #fff;  /* Adiciona uma linha separadora opcional */
+    border-radius: 0 0 20px 20px;  /* Arredonda os cantos inferiores */
 }
 
 .btn-close{
